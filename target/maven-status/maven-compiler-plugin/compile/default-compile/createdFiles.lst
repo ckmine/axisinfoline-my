@@ -1,0 +1,16 @@
+com\axisInfoline\helpDesk\location\controller\LocationController.class
+com\axisInfoline\helpDesk\employee\service\EmployeeService.class
+com\axisInfoline\helpDesk\location\domain\Location.class
+com\axisInfoline\helpDesk\tickets\service\TicketService$1.class
+com\axisInfoline\helpDesk\employee\domain\Employee.class
+com\axisInfoline\helpDesk\employee\repository\EmployeeJpaRepository.class
+com\axisInfoline\helpDesk\tickets\repository\TicketJpaRepository.class
+com\axisInfoline\helpDesk\HelpDeskApplication.class
+com\axisInfoline\helpDesk\tickets\repository\TicketRepository.class
+com\axisInfoline\helpDesk\tickets\controller\TicketController.class
+com\axisInfoline\helpDesk\employee\controller\EmployeeController.class
+com\axisInfoline\helpDesk\tickets\service\TicketService.class
+com\axisInfoline\helpDesk\location\service\LocationService$1.class
+com\axisInfoline\helpDesk\location\service\LocationService.class
+com\axisInfoline\helpDesk\tickets\domain\Ticket.class
+com\axisInfoline\helpDesk\location\repository\LocationJpaRepository.class

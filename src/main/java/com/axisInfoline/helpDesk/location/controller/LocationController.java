@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+//for local
 @CrossOrigin(origins = {"http://localhost:3000"})
+//for server
+//@CrossOrigin(origins = {"https://portal.axisinfoline.com"})
 @RestController
 public class LocationController {
 

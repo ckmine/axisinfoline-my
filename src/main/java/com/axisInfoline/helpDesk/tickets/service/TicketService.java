@@ -55,8 +55,9 @@ public class TicketService {
     }
 
     public String updateTicketByAdmin(Ticket ticket) {
-//        ticketRepository.updateTicketByAdmin(ticket);
+//      ticketRepository.updateTicketByAdmin(ticket);
         System.out.println(ticket);
+        ticket.setStatus(ticket.getStatus().toUpperCase());
         ticketJpaRepository.save(ticket);
         return "Ticket updated";
     }

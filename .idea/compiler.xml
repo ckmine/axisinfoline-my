@@ -10,11 +10,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="axisinfoline" target="17" />
       <module name="helpDesk" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="axisinfoline" options="-parameters" />
       <module name="helpDesk" options="-parameters" />
       <module name="ticket" options="-parameters" />
     </option>

@@ -298,4 +298,42 @@ public class Ticket {
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id='" + id + '\'' +
+                ", serialNo=" + serialNo +
+                ", complaintNo='" + complaintNo + '\'' +
+                ", complaintDatetime=" + complaintDatetime +
+                ", circle='" + circle + '\'' +
+                ", division='" + division + '\'' +
+                ", complainantName='" + complainantName + '\'' +
+                ", complainantDesignation='" + complainantDesignation + '\'' +
+                ", complainantContactNo='" + complainantContactNo + '\'' +
+                ", defectiveItemName='" + defectiveItemName + '\'' +
+                ", uxb1jsi364g4453780='" + uxb1jsi364g4453780 + '\'' +
+                ", engineerAssigned='" + engineerAssigned + '\'' +
+                ", engineerContactNo='" + engineerContactNo + '\'' +
+                ", complaintAttemptsFirstDateAndTime=" + complaintAttemptsFirstDateAndTime +
+                ", complaintAttemptsSecondDateAndTime=" + complaintAttemptsSecondDateAndTime +
+                ", complaintAttemptsThirdDateAndTime=" + complaintAttemptsThirdDateAndTime +
+                ", complaintCompletionDatetime=" + complaintCompletionDatetime +
+                ", status='" + status + '\'' +
+                ", actionTakenAndSpareUsed='" + actionTakenAndSpareUsed + '\'' +
+                ", oldSerialNoMbHddTft='" + oldSerialNoMbHddTft + '\'' +
+                ", newSerialNoMbHddTft='" + newSerialNoMbHddTft + '\'' +
+                ", complaintAttendHours='" + complaintAttendHours + '\'' +
+                ", complaintCompletionInDays='" + complaintCompletionInDays + '\'' +
+                ", complaintCompletionInHour='" + complaintCompletionInHour + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", product='" + product + '\'' +
+                ", machineMake='" + machineMake + '\'' +
+                ", problemType='" + problemType + '\'' +
+                ", substation='" + substation + '\'' +
+                ", landmark='" + landmark + '\'' +
+                ", pinCode='" + pinCode + '\'' +
+                '}';
+    }
 }

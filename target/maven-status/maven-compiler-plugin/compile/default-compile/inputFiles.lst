@@ -1,0 +1,14 @@
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\employee\service\EmployeeService.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\tickets\repository\TicketRepository.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\tickets\service\TicketService.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\location\domain\Location.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\location\repository\LocationJpaRepository.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\tickets\domain\Ticket.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\tickets\repository\TicketJpaRepository.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\employee\domain\Employee.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\tickets\controller\TicketController.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\location\controller\LocationController.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\employee\controller\EmployeeController.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\location\service\LocationService.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\HelpDeskApplication.java
+D:\axisinfoline\src\main\java\com\axisInfoline\helpDesk\employee\repository\EmployeeJpaRepository.java
