@@ -53,6 +53,10 @@ public class EmployeeService {
         return employeeJpaRepository.findByPhoneAndPassword(employee.getPhone(), employee.getPassword());
     }
 
+    public Employee getEmployeeById(String id){
+        return employeeJpaRepository.findById(id);
+    }
+
     public List<Employee> getAllEngineers(String status){
         List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'Engineer' and status=:status", Employee.class).setParameter("status",status).getResultList();
         employees.forEach(e-> {

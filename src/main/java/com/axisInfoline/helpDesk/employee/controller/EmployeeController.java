@@ -39,4 +39,9 @@ public class EmployeeController {
         return employeeService.authenticated(employee);
     }
 
+    @GetMapping(value = "/employee/{id}")
+    public Employee getEmployeeById(@PathVariable String id){
+        return employeeService.getEmployeeById(id);
+    }
+
 }

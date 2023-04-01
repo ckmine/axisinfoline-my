@@ -8,4 +8,6 @@ public interface EmployeeJpaRepository extends org.springframework.data.jpa.repo
     @Query(value = "SELECT * FROM helpdesk.employee where status = 'Active' and phone = ?1 AND password = ?2", nativeQuery = true)
     Employee findByPhoneAndPassword(String phone, String password);
 
+    @Query(value = "SELECT * FROM helpdesk.employee where status = 'Active' and id = ?1", nativeQuery = true)
+    Employee findById(String id);
 }
