@@ -35,7 +35,9 @@ public class TicketRepository {
                         "landmark," +
                         "pin_code," +
                         "status," +
-                        "complaint_datetime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+                        "complaint_datetime," +
+                        "uxb1jsi364g4453780," +
+                        "project_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
                 .setParameter(1, ticket.getId())
                 .setParameter(2,ticket.getComplaintNo())
                 .setParameter(3,ticket.getComplainantName())
@@ -51,6 +53,8 @@ public class TicketRepository {
                 .setParameter(13,ticket.getPinCode())
                 .setParameter(14,"OPEN")
                 .setParameter(15, ticket.getComplaintDatetime())
+                .setParameter(16, ticket.getUxb1jsi364g4453780())
+                .setParameter(17, ticket.getProjectName())
                 .executeUpdate();
         return ticket.getComplaintNo();
     }
