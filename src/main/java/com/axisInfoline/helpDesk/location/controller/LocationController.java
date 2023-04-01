@@ -32,6 +32,11 @@ public class LocationController {
         return locationService.getAllDivisionByCircle(circle);
     }
 
+    @GetMapping(value = "/getAllSubDivisionByDivision/{division}")
+    public List<String> getAllSubDivisionByDivision(@PathVariable String division){
+        return locationService.getAllSubDivisionByDivision(division);
+    }
+
     @PostMapping(value = "/insertLocation")
     public String insertLocation(Location location){
         return locationService.insertLocation(location);

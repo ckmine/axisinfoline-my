@@ -36,8 +36,11 @@ public class LocationService {
     }
 
     public List<String> getAllDivisionByCircle(String circle){
-        System.out.println(circle);
         return entityManager.createNativeQuery("select distinct(division) from helpdesk.location where circle=:circle", String.class).setParameter("circle",circle).getResultList();
+    }
+
+    public List<String> getAllSubDivisionByDivision(String division){
+        return entityManager.createNativeQuery("select distinct(subdivision) from helpdesk.location where division=:division", String.class).setParameter("division", division).getResultList();
     }
 
     public String insertLocation(Location location){
