@@ -69,12 +69,18 @@ public class TicketService {
         return ticketRepository.updateTicketByEngineer(ticket);
     }
 
-    public List<Ticket> getAllTickets(String status) {
-        return ticketRepository.getAllTickets(status);
+    public LocalDateTime convertStringToLocalDateTime(String date) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(date.concat(" 00:00"), formatter);
     }
 
-    public List<Ticket> getAllTicketsByPhoneNo(String phone, String status) {
-        return ticketRepository.getAllTicketsByPhoneNo(phone, status);
+    public List<Ticket> getAllTickets(String status, String fromDate, String toDate) {
+        return ticketRepository.getAllTickets(status,  convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
+    }
+
+    public List<Ticket> getAllTicketsByPhoneNo(String phone, String status, String fromDate, String toDate) {
+        return ticketRepository.getAllTicketsByPhoneNo(phone, status, convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
     }
 
     public String deleteTicket(String complaintNumber) {

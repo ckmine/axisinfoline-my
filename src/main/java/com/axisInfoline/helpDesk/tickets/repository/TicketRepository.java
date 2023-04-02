@@ -216,12 +216,12 @@ public class TicketRepository {
         return "Ticket Successfully updated";
     }
 
-    public List<Ticket> getAllTickets(String status){
-        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status order by complaint_datetime DESC",Ticket.class).setParameter("status",status).getResultList();
+    public List<Ticket> getAllTickets(String status, LocalDateTime fromDate, LocalDateTime toDate){
+        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
     }
 
-    public List<Ticket> getAllTicketsByPhoneNo(String phone,String status){
-        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status AND engineer_contact_no=:phone order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("phone",phone).getResultList();
+    public List<Ticket> getAllTicketsByPhoneNo(String phone,String status, LocalDateTime fromDate, LocalDateTime toDate){
+        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and engineer_contact_no=:phone and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("phone",phone).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
     }
 
     @Transactional

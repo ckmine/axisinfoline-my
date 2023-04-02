@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = {"https://portal.axisinfoline.com","http://localhost:3000"})
@@ -17,14 +18,14 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @GetMapping("/getTickets/admin/{status}")
-    public List<Ticket> getTickets(@PathVariable String status) {
-        return ticketService.getAllTickets(status);
+    @GetMapping("/getTickets/admin/{status}/{fromDate}/{toDate}")
+    public List<Ticket> getTickets(@PathVariable String status, @PathVariable String fromDate, @PathVariable String toDate) {
+        return ticketService.getAllTickets(status, fromDate, toDate);
     }
 
-    @GetMapping("/getTickets/{phone}/{status}")
-    public List<Ticket> getTicketsForEngineers(@PathVariable String phone, @PathVariable String status) {
-        return ticketService.getAllTicketsByPhoneNo(phone,status);
+    @GetMapping("/getTickets/{phone}/{status}/{fromDate}/{toDate}")
+    public List<Ticket> getTicketsForEngineers(@PathVariable String phone, @PathVariable String status, @PathVariable String fromDate, @PathVariable String toDate) {
+        return ticketService.getAllTicketsByPhoneNo(phone,status, fromDate, toDate);
     }
 
     @PostMapping("/createTicket")
