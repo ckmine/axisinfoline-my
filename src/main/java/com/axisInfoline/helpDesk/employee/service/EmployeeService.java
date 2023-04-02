@@ -57,6 +57,14 @@ public class EmployeeService {
         return employeeJpaRepository.findById(id);
     }
 
+    @Transactional
+    public String deleteEmployeeById(String id){
+        entityManager.createNativeQuery("delete from helpdesk.employee WHERE id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
+        return "Ticket deleted successfully";
+    }
+
     public List<Employee> getAllEngineers(String status){
         List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'Engineer' and status=:status", Employee.class).setParameter("status",status).getResultList();
         employees.forEach(e-> {

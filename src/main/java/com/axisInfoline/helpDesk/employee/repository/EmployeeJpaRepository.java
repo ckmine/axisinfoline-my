@@ -10,4 +10,5 @@ public interface EmployeeJpaRepository extends org.springframework.data.jpa.repo
 
     @Query(value = "SELECT * FROM helpdesk.employee where status = 'Active' and id = ?1", nativeQuery = true)
     Employee findById(String id);
+
 }
