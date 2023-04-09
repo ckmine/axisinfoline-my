@@ -123,15 +123,15 @@ public class TicketService {
                     ticket.setEngineerAssigned(row.getCell(14).getStringCellValue());
                     ticket.setEngineerContactNo(new DataFormatter().formatCellValue(row.getCell(15)));
                     //niche wale pe doubt hai
-                    if (row.getCell(16).getDateCellValue() != null) {
-                        ticket.setComplaintAttemptsFirstDateAndTime(LocalDateTime.ofInstant(row.getCell(16).getDateCellValue().toInstant(), ZoneId.systemDefault()));
-                    }
-                    if (row.getCell(17).getDateCellValue() != null) {
-                        ticket.setComplaintAttemptsSecondDateAndTime(LocalDateTime.ofInstant(row.getCell(17).getDateCellValue().toInstant(), ZoneId.systemDefault()));
-                    }
-                    if (row.getCell(18).getDateCellValue() != null) {
-                        ticket.setComplaintAttemptsThirdDateAndTime(LocalDateTime.ofInstant(row.getCell(18).getDateCellValue().toInstant(), ZoneId.systemDefault()));
-                    }
+//                    if (row.getCell(16).getDateCellValue() != null) {
+//                        ticket.setComplaintAttemptsFirstDateAndTime(LocalDateTime.ofInstant(row.getCell(16).getDateCellValue().toInstant(), ZoneId.systemDefault()));
+//                    }
+//                    if (row.getCell(17).getDateCellValue() != null) {
+//                        ticket.setComplaintAttemptsSecondDateAndTime(LocalDateTime.ofInstant(row.getCell(17).getDateCellValue().toInstant(), ZoneId.systemDefault()));
+//                    }
+//                    if (row.getCell(18).getDateCellValue() != null) {
+//                        ticket.setComplaintAttemptsThirdDateAndTime(LocalDateTime.ofInstant(row.getCell(18).getDateCellValue().toInstant(), ZoneId.systemDefault()));
+//                    }
                     if (row.getCell(19).getDateCellValue() != null) {
                         ticket.setComplaintCompletionDatetime(LocalDateTime.of(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(19).getDateCellValue())), LocalTime.parse(new SimpleDateFormat("HH:mm:ss").format(row.getCell(20).getDateCellValue()))));
                     }
@@ -139,9 +139,9 @@ public class TicketService {
                     ticket.setActionTakenAndSpareUsed(row.getCell(22).getStringCellValue());
                     ticket.setOldSerialNoMbHddTft(row.getCell(23).getStringCellValue());
                     ticket.setNewSerialNoMbHddTft(row.getCell(24).getStringCellValue());
-                    ticket.setComplaintAttendHours(String.valueOf(row.getCell(25).getNumericCellValue()));
-                    ticket.setComplaintCompletionInDays(String.valueOf(row.getCell(26).getNumericCellValue()));
-                    ticket.setComplaintCompletionInHour(String.valueOf(row.getCell(27).getNumericCellValue()));
+//                    ticket.setComplaintAttendHours(String.valueOf(row.getCell(25).getNumericCellValue()));
+//                    ticket.setComplaintCompletionInDays(String.valueOf(row.getCell(26).getNumericCellValue()));
+//                    ticket.setComplaintCompletionInHour(String.valueOf(row.getCell(27).getNumericCellValue()));
                     ticket.setRemarks(row.getCell(28).getStringCellValue());
                     ticket.setId(getMd5(ticket.getComplaintNo().concat(ticket.getComplainantName())));
                     ticketRepository.insertTicketForImport(ticket);

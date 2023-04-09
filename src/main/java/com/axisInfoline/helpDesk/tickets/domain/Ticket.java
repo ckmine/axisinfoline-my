@@ -22,18 +22,13 @@ public class Ticket {
     String defectiveItemName;
     String uxb1jsi364g4453780;
     String engineerAssigned;
+    LocalDateTime engineerAssignedDateTime;
     String engineerContactNo;
-    LocalDateTime complaintAttemptsFirstDateAndTime;
-    LocalDateTime complaintAttemptsSecondDateAndTime;
-    LocalDateTime complaintAttemptsThirdDateAndTime;
     LocalDateTime complaintCompletionDatetime;
     String status;
     String actionTakenAndSpareUsed;
     String oldSerialNoMbHddTft;
     String newSerialNoMbHddTft;
-    String complaintAttendHours;
-    String complaintCompletionInDays;
-    String complaintCompletionInHour;
     String remarks;
     String projectName;
     String product;
@@ -139,6 +134,14 @@ public class Ticket {
         this.engineerAssigned = engineerAssigned;
     }
 
+    public LocalDateTime getEngineerAssignedDateTime() {
+        return engineerAssignedDateTime;
+    }
+
+    public void setEngineerAssignedDateTime(LocalDateTime engineerAssignedDateTime) {
+        this.engineerAssignedDateTime = engineerAssignedDateTime;
+    }
+
     public String getEngineerContactNo() {
         return engineerContactNo;
     }
@@ -153,30 +156,6 @@ public class Ticket {
 
     public void setComplaintCompletionDatetime(LocalDateTime complaintCompletionDatetime) {
         this.complaintCompletionDatetime = complaintCompletionDatetime;
-    }
-
-    public LocalDateTime getComplaintAttemptsFirstDateAndTime() {
-        return complaintAttemptsFirstDateAndTime;
-    }
-
-    public void setComplaintAttemptsFirstDateAndTime(LocalDateTime complaintAttemptsFirstDateAndTime) {
-        this.complaintAttemptsFirstDateAndTime = complaintAttemptsFirstDateAndTime;
-    }
-
-    public LocalDateTime getComplaintAttemptsSecondDateAndTime() {
-        return complaintAttemptsSecondDateAndTime;
-    }
-
-    public void setComplaintAttemptsSecondDateAndTime(LocalDateTime complaintAttemptsSecondDateAndTime) {
-        this.complaintAttemptsSecondDateAndTime = complaintAttemptsSecondDateAndTime;
-    }
-
-    public LocalDateTime getComplaintAttemptsThirdDateAndTime() {
-        return complaintAttemptsThirdDateAndTime;
-    }
-
-    public void setComplaintAttemptsThirdDateAndTime(LocalDateTime complaintAttemptsThirdDateAndTime) {
-        this.complaintAttemptsThirdDateAndTime = complaintAttemptsThirdDateAndTime;
     }
 
     public String getStatus() {
@@ -209,30 +188,6 @@ public class Ticket {
 
     public void setNewSerialNoMbHddTft(String newSerialNoMbHddTft) {
         this.newSerialNoMbHddTft = newSerialNoMbHddTft;
-    }
-
-    public String getComplaintAttendHours() {
-        return complaintAttendHours;
-    }
-
-    public void setComplaintAttendHours(String complaintAttendHours) {
-        this.complaintAttendHours = complaintAttendHours;
-    }
-
-    public String getComplaintCompletionInHour() {
-        return complaintCompletionInHour;
-    }
-
-    public void setComplaintCompletionInHour(String complaintCompletionInHour) {
-        this.complaintCompletionInHour = complaintCompletionInHour;
-    }
-
-    public String getComplaintCompletionInDays() {
-        return complaintCompletionInDays;
-    }
-
-    public void setComplaintCompletionInDays(String complaintCompletionInDays) {
-        this.complaintCompletionInDays = complaintCompletionInDays;
     }
 
     public String getRemarks() {
@@ -315,17 +270,11 @@ public class Ticket {
                 ", uxb1jsi364g4453780='" + uxb1jsi364g4453780 + '\'' +
                 ", engineerAssigned='" + engineerAssigned + '\'' +
                 ", engineerContactNo='" + engineerContactNo + '\'' +
-                ", complaintAttemptsFirstDateAndTime=" + complaintAttemptsFirstDateAndTime +
-                ", complaintAttemptsSecondDateAndTime=" + complaintAttemptsSecondDateAndTime +
-                ", complaintAttemptsThirdDateAndTime=" + complaintAttemptsThirdDateAndTime +
                 ", complaintCompletionDatetime=" + complaintCompletionDatetime +
                 ", status='" + status + '\'' +
                 ", actionTakenAndSpareUsed='" + actionTakenAndSpareUsed + '\'' +
                 ", oldSerialNoMbHddTft='" + oldSerialNoMbHddTft + '\'' +
                 ", newSerialNoMbHddTft='" + newSerialNoMbHddTft + '\'' +
-                ", complaintAttendHours='" + complaintAttendHours + '\'' +
-                ", complaintCompletionInDays='" + complaintCompletionInDays + '\'' +
-                ", complaintCompletionInHour='" + complaintCompletionInHour + '\'' +
                 ", remarks='" + remarks + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", product='" + product + '\'' +

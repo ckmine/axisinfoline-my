@@ -81,17 +81,11 @@ public class TicketRepository {
                         "uxb1jsi364g4453780," +
                         "engineer_assigned," +
                         "engineer_contact_no," +
-                        "complaint_attempts_first_date_and_time," +
-                        "complaint_attempts_second_date_and_time," +
-                        "complaint_attempts_third_date_and_time," +
                         "action_taken_and_spare_used," +
                         "old_serial_no_mb_hdd_tft," +
                         "new_serial_no_mb_hdd_tft," +
                         "remarks," +
-                        "complaint_completion_datetime," +
-                        "complaint_completion_in_hour," +
-                        "complaint_attend_hours," +
-                        "complaint_completion_in_days) " +
+                        "complaint_completion_datetime) " +
                         "VALUES (:id,:complaintNo," +
                         ":complainantName," +
                         ":complainantDesignation," +
@@ -110,17 +104,11 @@ public class TicketRepository {
                         ":uxb1jsi364g4453780," +
                         ":engineerAssigned," +
                         ":engineerContactNo," +
-                        ":complaintAttemptsFirstDateAndTime," +
-                        ":complaintAttemptsSecondDateAndTime," +
-                        ":complaintAttemptsThirdDateAndTime," +
                         ":actionTakenAndSpareUsed," +
                         ":oldSerialNoMbHddTft," +
                         ":newSerialNoMbHddTft," +
                         ":remarks," +
-                        ":complaintCompletionDatetime," +
-                        ":complaintCompletionInHour," +
-                        ":complaintAttendHours," +
-                        ":complaintCompletionInDays)")
+                        ":complaintCompletionDatetime)")
                 .setParameter("id", ticket.getId())
                 .setParameter("complaintNo",ticket.getComplaintNo())
                 .setParameter("complainantName",ticket.getComplainantName())
@@ -140,24 +128,18 @@ public class TicketRepository {
                 .setParameter("uxb1jsi364g4453780", ticket.getUxb1jsi364g4453780())
                 .setParameter("engineerAssigned", ticket.getEngineerAssigned())
                 .setParameter("engineerContactNo", ticket.getEngineerContactNo())
-                .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
-                .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
-                .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
                 .setParameter("actionTakenAndSpareUsed", ticket.getActionTakenAndSpareUsed())
                 .setParameter("oldSerialNoMbHddTft", ticket.getOldSerialNoMbHddTft())
                 .setParameter("newSerialNoMbHddTft", ticket.getNewSerialNoMbHddTft())
                 .setParameter("remarks", ticket.getRemarks())
                 .setParameter("complaintCompletionDatetime", ticket.getComplaintCompletionDatetime())
-                .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
-                .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
-                .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
                 .executeUpdate();
         return ticket.getComplaintNo();
     }
 
     @Transactional
     public String updateTicketByAdmin(Ticket ticket) {
-        entityManager.createNativeQuery("UPDATE helpdesk.tickets set circle=:circle, division=:division, complainant_designation=:complainantDesignation, complainant_contact_no=:complainantContactNo, defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, engineer_assigned=:engineerAssigned, engineer_contact_no=:engineerContactNo, complaint_attempts_first_date_and_time=:complaintAttemptsFirstDateAndTime, complaint_attempts_second_date_and_time=:complaintAttemptsSecondDateAndTime, complaint_attempts_third_date_and_time=:complaintAttemptsThirdDateAndTime, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft, complaint_attend_hours=:complaintAttendHours, complaint_completion_in_days=:complaintCompletionInDays, complaint_completion_in_hour=:complaintCompletionInHour, remarks=:remarks, project_name=:projectName, product=:product, machine_make=:machineMake, problem_type=:problemType, landmark=:landmark, pin_code=:pinCode, complainant_name=:complainantName, substation=:substation, complaint_datetime=:complaintDatetime, serial_no=:serialNo, complaint_completion_datetime=:complaintCompletionDatetime WHERE serial_no=:serialNo")
+        entityManager.createNativeQuery("UPDATE helpdesk.tickets set circle=:circle, division=:division, complainant_designation=:complainantDesignation, complainant_contact_no=:complainantContactNo, defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, engineer_assigned=:engineerAssigned, engineer_contact_no=:engineerContactNo, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft, remarks=:remarks, project_name=:projectName, product=:product, machine_make=:machineMake, problem_type=:problemType, landmark=:landmark, pin_code=:pinCode, complainant_name=:complainantName, substation=:substation, complaint_datetime=:complaintDatetime, serial_no=:serialNo, complaint_completion_datetime=:complaintCompletionDatetime WHERE serial_no=:serialNo")
         .setParameter("circle", ticket.getCircle())
         .setParameter("division", ticket.getDivision())
         .setParameter("complainantDesignation", ticket.getComplainantDesignation())
@@ -166,16 +148,10 @@ public class TicketRepository {
         .setParameter("uxb1jsi364g4453780", ticket.getUxb1jsi364g4453780())
         .setParameter("engineerAssigned", ticket.getEngineerAssigned())
         .setParameter("engineerContactNo", ticket.getEngineerContactNo())
-        .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
-        .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
-        .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
         .setParameter("status", ticket.getStatus())
         .setParameter("actionTakenAndSpareUsed", ticket.getActionTakenAndSpareUsed())
         .setParameter("oldSerialNoMbHddTft", ticket.getOldSerialNoMbHddTft())
         .setParameter("newSerialNoMbHddTft", ticket.getNewSerialNoMbHddTft())
-        .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
-        .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
-        .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
         .setParameter("remarks", ticket.getRemarks())
         .setParameter("projectName", ticket.getProjectName())
         .setParameter("product", ticket.getProduct())
@@ -194,19 +170,13 @@ public class TicketRepository {
 
     @Transactional
     public String updateTicketByEngineer(Ticket ticket) {
-        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, complaint_attempts_first_date_and_time=:complaintAttemptsFirstDateAndTime, complaint_attempts_second_date_and_time=:complaintAttemptsSecondDateAndTime, complaint_attempts_third_date_and_time=:complaintAttemptsThirdDateAndTime, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft, complaint_attend_hours=:complaintAttendHours, complaint_completion_in_days=:complaintCompletionInDays, complaint_completion_in_hour=:complaintCompletionInHour, remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime WHERE serial_no=:serialNo")
+        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft,  remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime WHERE serial_no=:serialNo")
                 .setParameter("defectiveItemName", ticket.getDefectiveItemName())
                 .setParameter("uxb1jsi364g4453780", ticket.getUxb1jsi364g4453780())
-                .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
-                .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
-                .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
                 .setParameter("status", ticket.getStatus())
                 .setParameter("actionTakenAndSpareUsed", ticket.getActionTakenAndSpareUsed())
                 .setParameter("oldSerialNoMbHddTft", ticket.getOldSerialNoMbHddTft())
                 .setParameter("newSerialNoMbHddTft", ticket.getNewSerialNoMbHddTft())
-                .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
-                .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
-                .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
                 .setParameter("remarks", ticket.getRemarks())
                 .setParameter("machineMake", ticket.getMachineMake())
                 .setParameter("problemType", ticket.getProblemType())

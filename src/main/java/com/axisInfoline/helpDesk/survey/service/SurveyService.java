@@ -141,7 +141,11 @@ public class SurveyService {
     }
 
     public List<Survey> fetchSurveyListByCity(String city) {
-        return surveyRepository.fetchSurveyListByCity(city);
+        if(!city.equals("All")){
+            return surveyRepository.fetchSurveyListByCity(city);
+        }else {
+            return surveyRepository.fetchAllSurveyList();
+        }
     }
 
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Survey> data, String city) throws IOException {
