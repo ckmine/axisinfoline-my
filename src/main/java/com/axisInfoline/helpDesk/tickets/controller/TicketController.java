@@ -1,5 +1,7 @@
 package com.axisInfoline.helpDesk.tickets.controller;
 
+import com.axisInfoline.helpDesk.core.domain.Count;
+import com.axisInfoline.helpDesk.core.domain.SearchedText;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import com.axisInfoline.helpDesk.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,11 @@ public class TicketController {
     @GetMapping("/getTickets/admin/{status}/{fromDate}/{toDate}")
     public List<Ticket> getTickets(@PathVariable String status, @PathVariable String fromDate, @PathVariable String toDate) {
         return ticketService.getAllTickets(status, fromDate, toDate);
+    }
+
+    @PostMapping("/getTickets/AEIT/{status}/{fromDate}/{toDate}")
+    public List<Ticket> getTickets(@RequestBody SearchedText searchedText, @PathVariable String status, @PathVariable String fromDate, @PathVariable String toDate) {
+        return ticketService.getTicketsByCircle(searchedText.getText() ,status, fromDate, toDate);
     }
 
     @GetMapping("/getTickets/{phone}/{status}/{fromDate}/{toDate}")
@@ -57,6 +64,11 @@ public class TicketController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/getTicketCount/admin")
+    public List<Count> getTicketsCountMatricesForAdmin() {
+        return ticketService.getTicketsCountMatricesForAdmin();
     }
 
 }

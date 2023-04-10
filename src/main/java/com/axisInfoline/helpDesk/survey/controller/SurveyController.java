@@ -46,6 +46,11 @@ public class SurveyController {
         return surveyService.fetchSurveyListByCity(city);
     }
 
+    @GetMapping("/getSurveyByCircle/{circle}")
+    public List<Survey> fetchSurveyListByCircle(@PathVariable String circle) {
+        return surveyService.fetchSurveyListByCircle(circle);
+    }
+
     @PatchMapping("/updateSurvey")
     public String updateSurvey(@RequestBody Survey survey) {
         return surveyService.updateSurvey(survey);
