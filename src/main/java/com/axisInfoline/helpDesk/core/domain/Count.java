@@ -1,9 +1,14 @@
 package com.axisInfoline.helpDesk.core.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Count {
 
+    @Id
     String name;
-    int count;
+    double count;
 
     public String getName() {
         return name;
@@ -13,11 +18,19 @@ public class Count {
         this.name = name;
     }
 
-    public int getCount() {
+    public double getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "Count{" +
+                "name='" + name + '\'' +
+                ", count=" + count +
+                '}';
     }
 }

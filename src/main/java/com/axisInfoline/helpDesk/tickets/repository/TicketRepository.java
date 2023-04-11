@@ -196,8 +196,7 @@ public class TicketRepository {
     }
 
     public List<Count> getTicketsCountMatricesForAdmin(){
-        //helpdesk.employee added for testing
-        return entityManager.createNativeQuery("select status as name,count(*) as count from helpdesk.employee group by status", Count.class).getResultList();
+        return entityManager.createNativeQuery("select status as name,count(*) as count from helpdesk.tickets group by status", Count.class).getResultList();
     }
 
     public List<Ticket> getAllTicketsByPhoneNo(String phone,String status, LocalDateTime fromDate, LocalDateTime toDate){
