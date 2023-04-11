@@ -86,20 +86,6 @@ public class TicketService {
         return ticketRepository.getTicketsByCircle(circle, status,  convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
     }
 
-    public List<Count> getTicketsCountMatricesForAdmin() {
-        List<Count> ticketsCountMatrics = new ArrayList<>();
-        ticketsCountMatrics.addAll(ticketRepository.getTicketsCountMatricesForAdmin());
-        Count createdTickets = new Count();
-        createdTickets.setName("currentMonthCreatedTicket");
-        createdTickets.setCount(ticketRepository.getCurrentMonthCreatedTicket(currentDateTime().with(firstDayOfMonth()),currentDateTime().with(lastDayOfMonth())));
-        ticketsCountMatrics.add(createdTickets);
-        Count closedTicket = new Count();
-        closedTicket.setName("currentMonthClosedTicket");
-        closedTicket.setCount(ticketRepository.getCurrentMonthClosedTicket(currentDateTime().with(firstDayOfMonth()),currentDateTime().with(lastDayOfMonth())));
-        ticketsCountMatrics.add(closedTicket);
-        return ticketsCountMatrics;
-    }
-
 
     public List<Ticket> getAllTicketsByPhoneNo(String phone, String status, String fromDate, String toDate) {
         return ticketRepository.getAllTicketsByPhoneNo(phone, status, convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));

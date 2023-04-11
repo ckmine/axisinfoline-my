@@ -8,7 +8,7 @@ public class Count {
 
     @Id
     String name;
-    double count;
+    Double count;
 
     public String getName() {
         return name;
@@ -18,11 +18,11 @@ public class Count {
         this.name = name;
     }
 
-    public double getCount() {
+    public Double getCount() {
         return count;
     }
 
-    public void setCount(double count) {
+    public void setCount(Double count) {
         this.count = count;
     }
 

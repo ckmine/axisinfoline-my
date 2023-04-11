@@ -196,12 +196,12 @@ public class TicketRepository {
         return entityManager.createNativeQuery("select status as name,count(*) as count from helpdesk.tickets group by status", Count.class).getResultList();
     }
 
-    public int getCurrentMonthCreatedTicket(LocalDateTime startDate, LocalDateTime endDate){
-        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.tickets where complaint_datetime between :startDate and :endDate", int.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).intValue();
+    public Double getCurrentMonthCreatedTicket(LocalDateTime startDate, LocalDateTime endDate){
+        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.tickets where complaint_datetime between :startDate and :endDate", Double.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).doubleValue();
     }
 
-    public int getCurrentMonthClosedTicket(LocalDateTime startDate, LocalDateTime endDate){
-        return ((Number) entityManager.createNativeQuery("select count(*) as count from helpdesk.tickets where complaint_completion_datetime between :startDate and :endDate", int.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).intValue();
+    public Double getCurrentMonthClosedTicket(LocalDateTime startDate, LocalDateTime endDate){
+        return ((Number) entityManager.createNativeQuery("select count(*) as count from helpdesk.tickets where complaint_completion_datetime between :startDate and :endDate", Double.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).doubleValue();
     }
 
     public List<Ticket> getAllTicketsByPhoneNo(String phone,String status, LocalDateTime fromDate, LocalDateTime toDate){

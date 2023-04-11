@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"https://portal.axisinfoline.com","http://localhost:3000"})
 @RestController
@@ -64,11 +65,6 @@ public class TicketController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/getTicketCount/admin")
-    public List<Count> getTicketsCountMatricesForAdmin() {
-        return ticketService.getTicketsCountMatricesForAdmin();
     }
 
 }
