@@ -1,15 +1,13 @@
 package com.axisInfoline.helpDesk.tickets.repository;
 
+import com.axisInfoline.helpDesk.core.domain.Count;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -188,6 +186,22 @@ public class TicketRepository {
 
     public List<Ticket> getAllTickets(String status, LocalDateTime fromDate, LocalDateTime toDate){
         return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
+    }
+
+    public List<Ticket> getTicketsByCircle(String circle, String status, LocalDateTime fromDate, LocalDateTime toDate){
+        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and circle= :circle and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("circle",circle).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
+    }
+
+    public List<Count> getTicketsCountMatricesForAdmin(){
+        return entityManager.createNativeQuery("select status as name,count(*) as count from helpdesk.tickets group by status", Count.class).getResultList();
+    }
+
+    public Double getCurrentMonthCreatedTicket(LocalDateTime startDate, LocalDateTime endDate){
+        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.tickets where complaint_datetime between :startDate and :endDate", Double.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).doubleValue();
+    }
+
+    public Double getCurrentMonthClosedTicket(LocalDateTime startDate, LocalDateTime endDate){
+        return ((Number) entityManager.createNativeQuery("select count(*) as count from helpdesk.tickets where complaint_completion_datetime between :startDate and :endDate", Double.class).setParameter("startDate", startDate).setParameter("endDate", endDate).getSingleResult()).doubleValue();
     }
 
     public List<Ticket> getAllTicketsByPhoneNo(String phone,String status, LocalDateTime fromDate, LocalDateTime toDate){

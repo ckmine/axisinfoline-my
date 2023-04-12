@@ -1,5 +1,6 @@
 package com.axisInfoline.helpDesk.tickets.service;
 
+import com.axisInfoline.helpDesk.core.domain.Count;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import com.axisInfoline.helpDesk.tickets.repository.TicketJpaRepository;
 import com.axisInfoline.helpDesk.tickets.repository.TicketRepository;
@@ -25,6 +26,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
 @Service
 public class TicketService {
@@ -78,6 +81,11 @@ public class TicketService {
     public List<Ticket> getAllTickets(String status, String fromDate, String toDate) {
         return ticketRepository.getAllTickets(status,  convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
     }
+
+    public List<Ticket> getTicketsByCircle(String circle, String status, String fromDate, String toDate) {
+        return ticketRepository.getTicketsByCircle(circle, status,  convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
+    }
+
 
     public List<Ticket> getAllTicketsByPhoneNo(String phone, String status, String fromDate, String toDate) {
         return ticketRepository.getAllTicketsByPhoneNo(phone, status, convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
@@ -195,6 +203,5 @@ public class TicketService {
             }
         };
     }
-
 
 }

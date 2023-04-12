@@ -1,5 +1,6 @@
 package com.axisInfoline.helpDesk.employee.service;
 
+import com.axisInfoline.helpDesk.core.domain.Count;
 import com.axisInfoline.helpDesk.employee.domain.Employee;
 import com.axisInfoline.helpDesk.employee.repository.EmployeeJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -11,7 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
 @Service
 public class EmployeeService {
@@ -89,6 +94,10 @@ public class EmployeeService {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Double getActiveEngineerForAdmin(){
+        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee where status=:status", Double.class).setParameter("status","Active").getSingleResult()).doubleValue();
     }
 
 }

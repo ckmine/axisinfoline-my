@@ -148,6 +148,10 @@ public class SurveyService {
         }
     }
 
+    public List<Survey> fetchSurveyListByCircle(String city) {
+            return surveyRepository.fetchSurveyListByCircle(city);
+    }
+
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Survey> data, String city) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(city);

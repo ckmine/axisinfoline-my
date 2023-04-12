@@ -139,4 +139,9 @@ public class LocationService {
         }
         return "File exported";
     }
+
+    public Double getTotalCircles(){
+        return ((Number) entityManager.createNativeQuery("select count(distinct(circle)) from helpdesk.location", Double.class).getSingleResult()).doubleValue();
+    }
+
 }
