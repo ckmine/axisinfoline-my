@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ticket" />
+        <module name="axisinfoline" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="axisinfoline" target="17" />
       <module name="helpDesk" target="17" />
     </bytecodeTargetLevel>
   </component>
