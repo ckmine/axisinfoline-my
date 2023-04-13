@@ -26,7 +26,7 @@ public class TicketController {
         return ticketService.getAllTickets(status, fromDate, toDate);
     }
 
-    @PostMapping("/getTickets/AEIT/{status}/{fromDate}/{toDate}")
+    @PostMapping("/getTickets/AIET/{status}/{fromDate}/{toDate}")
     public List<Ticket> getTickets(@RequestBody SearchedText searchedText, @PathVariable String status, @PathVariable String fromDate, @PathVariable String toDate) {
         return ticketService.getTicketsByCircle(searchedText.getText() ,status, fromDate, toDate);
     }

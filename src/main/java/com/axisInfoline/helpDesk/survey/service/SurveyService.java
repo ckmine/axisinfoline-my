@@ -131,9 +131,6 @@ public class SurveyService {
                     newSurvey.setDomainJoiningStatus(survey.getDomainJoiningStatus());
                     newSurvey.setUtilityContactPersonName(survey.getUtilityContactPersonName());
                     newSurvey.setUtilityContactPersonContact(survey.getUtilityContactPersonContact());
-                    newSurvey.setApproved(survey.getApproved());
-                    newSurvey.setApproverPhone(survey.getApproverPhone());
-                    newSurvey.setApproverName(survey.getApproverName());
                     surveyRepository.save(newSurvey);
                 });
         return "Survey Updated";

@@ -14,6 +14,7 @@ public class Survey {
     private String subdivision;
     private String endLocationAddress;
     private String itHardwareName;
+    private String machineMake;
     private String model;
     private String serialNo;
     private String upsBatteryStatus;
@@ -22,9 +23,6 @@ public class Survey {
     private String utilityContactPersonName;
     private String utilityContactPersonContact;
     private String city;
-    private Boolean approved;
-    private String approverName;
-    private String approverPhone;
 
     public Long getId() {
         return id;
@@ -72,6 +70,14 @@ public class Survey {
 
     public void setItHardwareName(String itHardwareName) {
         this.itHardwareName = itHardwareName;
+    }
+
+    public String getMachineMake() {
+        return machineMake;
+    }
+
+    public void setMachineMake(String machineMake) {
+        this.machineMake = machineMake;
     }
 
     public String getModel() {
@@ -138,27 +144,4 @@ public class Survey {
         this.city = city;
     }
 
-    public Boolean getApproved() {
-        return approved;
-    }
-
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
-    }
-
-    public String getApproverName() {
-        return approverName;
-    }
-
-    public void setApproverName(String approverName) {
-        this.approverName = approverName;
-    }
-
-    public String getApproverPhone() {
-        return approverPhone;
-    }
-
-    public void setApproverPhone(String approverPhone) {
-        this.approverPhone = approverPhone;
-    }
 }
