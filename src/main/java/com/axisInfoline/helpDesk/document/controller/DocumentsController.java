@@ -73,7 +73,7 @@ public class DocumentsController {
 	}
 
 	@PostMapping(value = { "/document" }, consumes = { "multipart/form-data" })
-	private Object uploadDocument(@RequestParam("userId") Long userId, @RequestParam("documentFile") MultipartFile uploadDocument) {
+	private Object uploadDocument(@RequestParam("userId") String userId, @RequestParam("documentFile") MultipartFile uploadDocument) {
 		Documents document = new Documents();
 		String name = "";
 
@@ -107,7 +107,7 @@ public class DocumentsController {
 
 				response.put("status","200");
 				response.put("message","Document uploaded successfully");
-				response.put("date",documentsDto);
+				response.put("data",documentsDto);
 				return new ResponseEntity<>(response, HttpStatus.OK);
 
 			} catch (Exception e) {

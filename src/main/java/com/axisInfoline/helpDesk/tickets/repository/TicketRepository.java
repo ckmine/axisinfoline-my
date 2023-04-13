@@ -168,7 +168,7 @@ public class TicketRepository {
 
     @Transactional
     public String updateTicketByEngineer(Ticket ticket) {
-        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft,  remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime WHERE serial_no=:serialNo")
+        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft,  remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime, doc_path=:docPath WHERE serial_no=:serialNo")
                 .setParameter("defectiveItemName", ticket.getDefectiveItemName())
                 .setParameter("uxb1jsi364g4453780", ticket.getUxb1jsi364g4453780())
                 .setParameter("status", ticket.getStatus())
@@ -180,6 +180,7 @@ public class TicketRepository {
                 .setParameter("problemType", ticket.getProblemType())
                 .setParameter("complaintCompletionDatetime", ticket.getComplaintCompletionDatetime())
                 .setParameter("serialNo", ticket.getSerialNo())
+                .setParameter("docPath", ticket.getDocPath())
                 .executeUpdate();
         return "Ticket Successfully updated";
     }

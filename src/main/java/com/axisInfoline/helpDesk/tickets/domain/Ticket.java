@@ -37,6 +37,7 @@ public class Ticket {
     String substation;
     String landmark;
     String pinCode;
+    String docPath;
 
     public String getId() {
         return id;
@@ -254,6 +255,14 @@ public class Ticket {
         this.pinCode = pinCode;
     }
 
+    public String getDocPath() {
+        return docPath;
+    }
+
+    public void setDocPath(String docPath) {
+        this.docPath = docPath;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
@@ -283,6 +292,7 @@ public class Ticket {
                 ", substation='" + substation + '\'' +
                 ", landmark='" + landmark + '\'' +
                 ", pinCode='" + pinCode + '\'' +
+                ", docPath='" + docPath + '\'' +
                 '}';
     }
 }

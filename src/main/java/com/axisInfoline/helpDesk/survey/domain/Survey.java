@@ -22,6 +22,9 @@ public class Survey {
     private String utilityContactPersonName;
     private String utilityContactPersonContact;
     private String city;
+    private Boolean approved;
+    private String approverName;
+    private String approverPhone;
 
     public Long getId() {
         return id;
@@ -133,5 +136,29 @@ public class Survey {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public String getApproverName() {
+        return approverName;
+    }
+
+    public void setApproverName(String approverName) {
+        this.approverName = approverName;
+    }
+
+    public String getApproverPhone() {
+        return approverPhone;
+    }
+
+    public void setApproverPhone(String approverPhone) {
+        this.approverPhone = approverPhone;
     }
 }

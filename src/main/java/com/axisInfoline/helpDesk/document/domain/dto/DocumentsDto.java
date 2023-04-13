@@ -10,23 +10,23 @@ import java.time.LocalDateTime;
 
 public class DocumentsDto {
 
-    private Long id;
-    private Long ownerId;
+    private int id;
+    private String ownerId;
     private String  name;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(Long ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 

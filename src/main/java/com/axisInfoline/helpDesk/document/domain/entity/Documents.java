@@ -16,10 +16,10 @@ public class Documents {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "owner_id")
-    private Long ownerId;
+    private String ownerId;
 
     @Column(name = "name")
     private String  name;
@@ -33,11 +33,11 @@ public class Documents {
     @Column(name = "deleted", columnDefinition = "boolean default false")
     private boolean deleted = Boolean.FALSE;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public Long getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
@@ -57,11 +57,11 @@ public class Documents {
         return deleted;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setOwnerId(Long ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 
