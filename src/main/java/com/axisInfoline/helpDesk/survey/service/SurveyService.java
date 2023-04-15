@@ -1,6 +1,6 @@
 package com.axisInfoline.helpDesk.survey.service;
 
-import com.axisInfoline.helpDesk.location.repository.LocationJpaRepository;
+import com.axisInfoline.helpDesk.employee.service.EmployeeService;
 import com.axisInfoline.helpDesk.survey.domain.Survey;
 import com.axisInfoline.helpDesk.survey.repository.SurveyJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -32,6 +32,9 @@ public class SurveyService {
 
     @Autowired
     SurveyJpaRepository surveyRepository;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -139,8 +142,12 @@ public class SurveyService {
         return "Survey Updated";
     }
 
-    public void deleteSurveyById(Long id) {
-        surveyRepository.deleteById(id);
+    public void deleteSurveyById(Long id, String loggedInUserId) throws Exception {
+        if(employeeService.isAdmin(loggedInUserId) || employeeService.isSuperAdmin(loggedInUserId) || employeeService.isSurveyor(loggedInUserId)){
+            surveyRepository.deleteById(id);
+        } else {
+            throw new Exception("You are not authorized to delete survey");
+        }
     }
 
     public List<Survey> fetchSurveyListByCity(String city) {

@@ -30,14 +30,14 @@ public class EmployeeController {
         return employeeService.updatePassword(employee, loggedInUserId);
     }
 
-    @GetMapping(value = "/getAllEngineers/{status}")
-    public List<Employee> getAllEngineers(@PathVariable String status){
-        return employeeService.getAllEngineers(status);
+    @GetMapping(value = "/getAllEngineers/{status}/loggedInUserId/{loggedInUserId}")
+    public List<Employee> getAllEngineers(@PathVariable String status, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.getAllEngineers(status, loggedInUserId);
     }
 
-    @GetMapping(value = "/getAllAeit/{status}")
-    public List<Employee> getAllAeit(@PathVariable String status){
-        return employeeService.getAllAeit(status);
+    @GetMapping(value = "/getAllAeit/{status}/loggedInUserId/{loggedInUserId}")
+    public List<Employee> getAllAeit(@PathVariable String status, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.getAllAeit(status, loggedInUserId);
     }
 
     @PostMapping(value = "/authenticated")
@@ -50,9 +50,9 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
-    @DeleteMapping(value = "/deleteEmployee/{id}")
-    public String deleteEmployeeById(@PathVariable String id){
-        return employeeService.deleteEmployeeById(id);
+    @DeleteMapping(value = "/deleteEmployee/{id}/loggedInUserId/{loggedInUserId}")
+    public String deleteEmployeeById(@PathVariable String id, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.deleteEmployeeById(id, loggedInUserId);
     }
 
 }

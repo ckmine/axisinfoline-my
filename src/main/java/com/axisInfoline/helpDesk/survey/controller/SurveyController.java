@@ -57,9 +57,9 @@ public class SurveyController {
     }
 
 
-    @DeleteMapping("/deleteSurvey/{id}")
-    public String deleteSurveyById(@PathVariable("id") Long id) {
-        surveyService.deleteSurveyById(id);
+    @DeleteMapping("/deleteSurvey/{id}/loggedInUserId/{loggedInUserId}")
+    public String deleteSurveyById(@PathVariable("id") Long id, @PathVariable String loggedInUserId) throws Exception {
+        surveyService.deleteSurveyById(id, loggedInUserId);
         return "Deleted Successfully";
     }
 

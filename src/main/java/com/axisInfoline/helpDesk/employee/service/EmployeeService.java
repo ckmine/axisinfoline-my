@@ -86,29 +86,41 @@ public class EmployeeService {
     }
 
     @Transactional
-    public String deleteEmployeeById(String id){
-        entityManager.createNativeQuery("delete from helpdesk.employee WHERE id=:id")
-                .setParameter("id", id)
-                .executeUpdate();
-        return "Ticket deleted successfully";
+    public String deleteEmployeeById(String id, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            entityManager.createNativeQuery("delete from helpdesk.employee WHERE id=:id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            return "Ticket deleted successfully";
+        } else {
+            throw new Exception("You are not authorized to Reset Passworf");
+        }
     }
 
-    public List<Employee> getAllEngineers(String status){
-        List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'Engineer' and status=:status", Employee.class).setParameter("status",status).getResultList();
-        employees.forEach(e-> {
-            e.setPassword(null);
-            e.setRole(null);
-        });
-        return employees;
+    public List<Employee> getAllEngineers(String status, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'Engineer' and status=:status", Employee.class).setParameter("status",status).getResultList();
+            employees.forEach(e-> {
+                e.setPassword(null);
+                e.setRole(null);
+            });
+            return employees;
+        } else {
+            throw new Exception("You are not authorized to Reset Passworf");
+        }
     }
 
-    public List<Employee> getAllAeit(String status){
-        List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'aeit' and status=:status", Employee.class).setParameter("status",status).getResultList();
-        employees.forEach(e-> {
-            e.setPassword(null);
-            e.setRole(null);
-        });
-        return employees;
+    public List<Employee> getAllAeit(String status, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'aeit' and status=:status", Employee.class).setParameter("status",status).getResultList();
+            employees.forEach(e-> {
+                e.setPassword(null);
+                e.setRole(null);
+            });
+            return employees;
+        } else {
+            throw new Exception("You are not authorized to access Aeit Data");
+        }
     }
 
     public static String getMd5(String input)
@@ -142,6 +154,10 @@ public class EmployeeService {
 
     public Boolean isAeit(String id){
         return employeeJpaRepository.findById(id).getRole().equals("aeit") ? true : false;
+    }
+
+    public Boolean isSurveyor(String id){
+        return employeeJpaRepository.findById(id).getRole().equals("Surveyor") ? true : false;
     }
 
 }

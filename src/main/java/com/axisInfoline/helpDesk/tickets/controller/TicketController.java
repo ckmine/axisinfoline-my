@@ -41,9 +41,9 @@ public class TicketController {
         return ticketService.createTicket(ticket);
     }
 
-    @PatchMapping("/admin/updateTicket")
-    public String updateTicket(@RequestBody Ticket ticket) {
-        return ticketService.updateTicketByAdmin(ticket);
+    @PatchMapping("/admin/updateTicket/loggedInUserId/{loggedInUserId}")
+    public String updateTicket(@RequestBody Ticket ticket, @PathVariable String loggedInUserId) throws Exception {
+        return ticketService.updateTicketByAdmin(ticket,loggedInUserId);
     }
 
     @PatchMapping("/engineer/updateTicket")
@@ -51,9 +51,9 @@ public class TicketController {
         return ticketService.updateTicketByEngineer(ticket);
     }
 
-    @DeleteMapping("/deleteTicket/{complaintNumber}")
-    public String deleteTicket(@PathVariable String complaintNumber) {
-        return ticketService.deleteTicket(complaintNumber);
+    @DeleteMapping("/deleteTicket/{complaintNumber}/loggedInUserId/{loggedInUserId}")
+    public String deleteTicket(@PathVariable String complaintNumber, @PathVariable String loggedInUserId) throws Exception {
+        return ticketService.deleteTicket(complaintNumber,loggedInUserId);
     }
 
     @RequestMapping(value = "/importTickets", method = RequestMethod.POST)

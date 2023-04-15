@@ -36,7 +36,7 @@ public class AdminService {
     LocationService locationService;
 
     public Map<String, Double> getCountMatricesForAdmin(String loggedInUserId) throws Exception {
-        if(employeeService.isAdmin(loggedInUserId)){
+        if(employeeService.isAdmin(loggedInUserId) || employeeService.isSuperAdmin(loggedInUserId)){
             Map<String, Double> ticketsCountMatrics = new HashMap<>();
             List<Count> ticketsCountMatricesForAdmin = ticketRepository.getTicketsCountMatricesForAdmin();
             ticketsCountMatricesForAdmin.forEach(data -> {
