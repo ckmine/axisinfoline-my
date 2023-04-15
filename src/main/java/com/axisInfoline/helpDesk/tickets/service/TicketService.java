@@ -100,7 +100,7 @@ public class TicketService {
     }
 
     public String deleteTicket(String complaintNumber, String loggedInUserId) throws Exception {
-        if(employeeService.isAdmin(loggedInUserId)){
+        if(employeeService.isSuperAdmin(loggedInUserId)){
             return ticketRepository.deleteTicket(complaintNumber);
         } else {
             throw new Exception("You are not authorized to see this data");

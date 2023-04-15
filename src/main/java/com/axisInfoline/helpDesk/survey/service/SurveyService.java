@@ -143,7 +143,7 @@ public class SurveyService {
     }
 
     public void deleteSurveyById(Long id, String loggedInUserId) throws Exception {
-        if(employeeService.isAdmin(loggedInUserId) || employeeService.isSuperAdmin(loggedInUserId) || employeeService.isSurveyor(loggedInUserId)){
+        if(employeeService.isSuperAdmin(loggedInUserId)){
             surveyRepository.deleteById(id);
         } else {
             throw new Exception("You are not authorized to delete survey");
