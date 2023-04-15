@@ -1,5 +1,6 @@
 package com.axisInfoline.helpDesk.employee.service;
 
+import com.axisInfoline.helpDesk.admin.service.AdminService;
 import com.axisInfoline.helpDesk.core.domain.Count;
 import com.axisInfoline.helpDesk.employee.domain.Employee;
 import com.axisInfoline.helpDesk.employee.repository.EmployeeJpaRepository;
@@ -8,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -27,15 +29,18 @@ public class EmployeeService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public String addEmployee(Employee employee) throws Exception {
-//        if(!isUserWithCircleExists(employee.getPhone())){
+    public String addEmployee(Employee employee, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            //        if(!isUserWithCircleExists(employee.getPhone())){
             employee.setId(getMd5(employee.getName()+employee.getPhone()+employee.getCircle()));
             employeeJpaRepository.save(employee);
             return "Employee Added";
 //        } else {
 //            throw new Exception("User Already Exists for circle: "+employee.getCircle());
 //        }
-
+        } else {
+            throw new Exception("You are not authorized to Add Employee");
+        }
     }
 
     public Boolean isUserWithCircleExists(String circle){
@@ -44,24 +49,32 @@ public class EmployeeService {
     }
 
     @Transactional
-    public String updateEmployee(Employee employee){
-        entityManager.createNativeQuery("UPDATE helpdesk.employee set name=:name, phone=:phone, circle=:circle, status=:status WHERE id=:id")
-                .setParameter("name", employee.getName())
-                .setParameter("phone", employee.getPhone())
-                .setParameter("circle", employee.getCircle())
-                .setParameter("status", employee.getStatus())
-                .setParameter("id", employee.getId())
-                .executeUpdate();
-        return "Employee Successfully updated";
+    public String updateEmployee(Employee employee, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            entityManager.createNativeQuery("UPDATE helpdesk.employee set name=:name, phone=:phone, circle=:circle, status=:status WHERE id=:id")
+                    .setParameter("name", employee.getName())
+                    .setParameter("phone", employee.getPhone())
+                    .setParameter("circle", employee.getCircle())
+                    .setParameter("status", employee.getStatus())
+                    .setParameter("id", employee.getId())
+                    .executeUpdate();
+            return "Employee Successfully updated";
+        } else {
+            throw new Exception("You are not authorized to Update Employee");
+        }
     }
 
     @Transactional
-    public String updatePassword(Employee employee){
-        entityManager.createNativeQuery("UPDATE helpdesk.employee set password=:password WHERE id=:id")
-                .setParameter("password", employee.getPassword())
-                .setParameter("id", employee.getId())
-                .executeUpdate();
-        return "Password Successfully updated";
+    public String updatePassword(Employee employee, String loggedInUserId) throws Exception {
+        if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){
+            entityManager.createNativeQuery("UPDATE helpdesk.employee set password=:password WHERE id=:id")
+                    .setParameter("password", employee.getPassword())
+                    .setParameter("id", employee.getId())
+                    .executeUpdate();
+            return "Password Successfully updated";
+        } else {
+            throw new Exception("You are not authorized to Reset Passworf");
+        }
     }
 
     public Employee authenticated(Employee employee){
@@ -117,6 +130,18 @@ public class EmployeeService {
 
     public Double getActiveEngineerForAdmin(){
         return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee where status=:status", Double.class).setParameter("status","Active").getSingleResult()).doubleValue();
+    }
+
+    public Boolean isAdmin(String id){
+        return employeeJpaRepository.findById(id).getRole().equals("Admin") ? true : false;
+    }
+
+    public Boolean isSuperAdmin(String id){
+        return employeeJpaRepository.findById(id).getRole().equals("superAdmin") ? true : false;
+    }
+
+    public Boolean isAeit(String id){
+        return employeeJpaRepository.findById(id).getRole().equals("aeit") ? true : false;
     }
 
 }

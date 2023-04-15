@@ -15,19 +15,19 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @PostMapping(value = "/addEmployee")
-    public String addEmployee(@RequestBody Employee employee) throws Exception {
-        return employeeService.addEmployee(employee);
+    @PostMapping(value = "/addEmployee/loggedInUserId/{loggedInUserId}")
+    public String addEmployee(@RequestBody Employee employee, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.addEmployee(employee, loggedInUserId);
     }
 
-    @PatchMapping(value = "/updateEmployee")
-    public String updateEmployee(@RequestBody Employee employee){
-        return employeeService.updateEmployee(employee);
+    @PatchMapping(value = "/updateEmployee/loggedInUserId/{loggedInUserId}")
+    public String updateEmployee(@RequestBody Employee employee, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.updateEmployee(employee,loggedInUserId);
     }
 
-    @PatchMapping(value = "/updatePassword")
-    public String updatePassword(@RequestBody Employee employee){
-        return employeeService.updatePassword(employee);
+    @PatchMapping(value = "/updatePassword/loggedInUserId/{loggedInUserId}")
+    public String updatePassword(@RequestBody Employee employee, @PathVariable String loggedInUserId) throws Exception {
+        return employeeService.updatePassword(employee, loggedInUserId);
     }
 
     @GetMapping(value = "/getAllEngineers/{status}")
