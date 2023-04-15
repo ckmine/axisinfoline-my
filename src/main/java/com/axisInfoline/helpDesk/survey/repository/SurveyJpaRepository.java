@@ -11,6 +11,9 @@ public interface SurveyJpaRepository extends JpaRepository<Survey, Long> {
     @Query(value = "SELECT * FROM helpdesk.survey where city = ?1", nativeQuery = true)
     public List<Survey> fetchSurveyListByCity(String city);
 
+    @Query(value = "SELECT * FROM helpdesk.survey where id in ?1", nativeQuery = true)
+    public List<Survey> fetchSurveyListById(List<Integer> ids);
+
     @Query(value = "SELECT * FROM helpdesk.survey where circle = ?1", nativeQuery = true)
     public List<Survey> fetchSurveyListByCircle(String circle);
 

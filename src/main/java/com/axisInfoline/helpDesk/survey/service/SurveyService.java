@@ -212,6 +212,10 @@ public class SurveyService {
         }
     }
 
+    public List<Survey> fetchSurveyListById(List<Integer> ids) {
+            return surveyRepository.fetchSurveyListById(ids);
+    }
+
     public List<Survey> fetchSurveyListByCircle(String city) {
         return surveyRepository.fetchSurveyListByCircle(city);
     }

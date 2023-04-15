@@ -120,7 +120,9 @@ public class TicketService {
             List<Ticket> tickets = new ArrayList<>();
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(multipartFile.getInputStream());
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
-            for (Row row : skipFirst(sheet)) {
+//            for (Row row : skipFirst(sheet))
+            for (Row row : sheet) {
+//            {
                 Row row1 = row;
                 if (!row.getCell(1).getStringCellValue().equals("")) {
                     Ticket ticket = new Ticket();
