@@ -116,11 +116,9 @@ public class TicketService {
     }
 
     public String importTickets(MultipartFile multipartFile) {
-        File file = new File(multipartFile.getOriginalFilename());
         try {
             List<Ticket> tickets = new ArrayList<>();
-            FileInputStream fileInputStream = new FileInputStream("C:\\Users\\Ravi Sharma\\Desktop\\surveydata.xlsx");
-            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream);
+            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(multipartFile.getInputStream());
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
             for (Row row : skipFirst(sheet)) {
                 Row row1 = row;

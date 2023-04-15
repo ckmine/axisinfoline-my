@@ -5,7 +5,7 @@ import com.axisInfoline.helpDesk.survey.domain.Survey;
 import com.axisInfoline.helpDesk.survey.repository.SurveyJpaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.Query;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,17 +15,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SurveyService {
@@ -39,40 +38,96 @@ public class SurveyService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public String importSurvey(MultipartFile multipartFile) {
-        File file = new File(multipartFile.getOriginalFilename());
+    public String importSurvey(MultipartFile multipartFile) throws Exception {
         try {
+            Long lastSerialNo = getLastSerialNumber();
             List<Survey> surveys = new ArrayList<>();
-            FileInputStream fileInputStream = new FileInputStream(file);
-            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream);
-            XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
-
-            for (Row row : skipFirst(sheet)) {
-                Row row1 = row;
-                if (!row.getCell(1).getStringCellValue().equals("")) {
-                    Survey survey = new Survey();
-
-                    survey.setCity(row.getCell(0).getStringCellValue());
-                    survey.setCircle(row.getCell(1).getStringCellValue());
-                    survey.setDivision(row.getCell(2).getStringCellValue());
-                    survey.setSubdivision(row.getCell(3).getStringCellValue());
-                    survey.setEndLocationAddress(row.getCell(4).getStringCellValue());
-                    survey.setItHardwareName(row.getCell(5).getStringCellValue());
-                    survey.setModel(row.getCell(6).getStringCellValue());
-                    survey.setSerialNo(row.getCell(7).getStringCellValue());
-                    survey.setUpsBatteryStatus(row.getCell(8).getStringCellValue());
-                    survey.setWindowsType(row.getCell(9).getStringCellValue());
-                    survey.setDomainJoiningStatus(row.getCell(10).getStringCellValue());
-                    survey.setUtilityContactPersonName(row.getCell(11).getStringCellValue());
-                    survey.setUtilityContactPersonContact(row.getCell(12).getStringCellValue());
-                    surveys.add(survey);
+            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(multipartFile.getInputStream());
+            for (int i = 0; i < xssfWorkbook.getNumberOfSheets(); i++) {
+                //code
+                XSSFSheet sheet = xssfWorkbook.getSheetAt(i);
+                String sheetName = xssfWorkbook.getSheetAt(i).getSheetName();
+                for (Row row : skipFirst(sheet)) {
+                    lastSerialNo = lastSerialNo + 1;
+                    Row row1 = row;
+                    if (row.getCell(1) != null && !StringUtils.isEmpty(row.getCell(1).getStringCellValue())) {
+                        Survey survey = new Survey();
+                        survey.setId(lastSerialNo);
+                        survey.setCity(sheetName);
+                        survey.setCircle(row.getCell(1).getStringCellValue());
+                        survey.setDivision(row.getCell(2).getStringCellValue());
+                        survey.setSubdivision(row.getCell(3).getStringCellValue());
+                        survey.setEndLocationAddress(row.getCell(4).getStringCellValue());
+                        survey.setItHardwareName(row.getCell(5).getStringCellValue());
+                        survey.setMachineMake(row.getCell(6).getStringCellValue());
+                        survey.setModel(row.getCell(7).getStringCellValue());
+                        survey.setSerialNo(row.getCell(8).getStringCellValue());
+                        survey.setUpsBatteryStatus(row.getCell(9).getStringCellValue());
+                        survey.setWindowsType(row.getCell(10).getStringCellValue());
+                        survey.setDomainJoiningStatus(row.getCell(11).getStringCellValue());
+                        survey.setUtilityContactPersonName(row.getCell(12).getStringCellValue());
+                        survey.setUtilityContactPersonContact(row.getCell(12).getStringCellValue());
+                        surveys.add(survey);
+//                        insertSurveyForImport(survey);
+                    }
                 }
             }
             surveyRepository.saveAll(surveys);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Survey Excel Imported";
+        return "Survey imported";
+    }
+
+    @Transactional
+    public Boolean insertSurveyForImport(Survey survey) {
+        entityManager.createNativeQuery("INSERT INTO helpdesk.survey(" +
+                        "id," +
+                        "city," +
+                        "circle," +
+                        "division," +
+                        "subdivision," +
+                        "end_location_address," +
+                        "it_hardware_name," +
+                        "model," +
+                        "serial_no," +
+                        "ups_battery_status," +
+                        "windows_type," +
+                        "domain_joining_status," +
+                        "utility_contact_person_name," +
+                        "utility_contact_person_contact," +
+                        "machine_make) VALUES (" +
+                        ":id," +
+                        ":city," +
+                        ":circle," +
+                        ":division," +
+                        ":subdivision," +
+                        ":end_location_address," +
+                        ":it_hardware_name," +
+                        ":model," +
+                        ":serial_no," +
+                        ":ups_battery_status," +
+                        ":windows_type," +
+                        ":domain_joining_status," +
+                        ":utility_contact_person_name," +
+                        ":utility_contact_person_contact," +
+                        ":machine_make)")
+                .setParameter("id", survey.getId())
+                .setParameter("city", survey.getCity())
+                .setParameter("circle", survey.getCircle())
+                .setParameter("division", survey.getDivision())
+                .setParameter("end_location_address", survey.getEndLocationAddress())
+                .setParameter("it_hardware_name", survey.getItHardwareName())
+                .setParameter("model", survey.getModel())
+                .setParameter("serial_no", survey.getSerialNo())
+                .setParameter("ups_battery_status", survey.getUpsBatteryStatus())
+                .setParameter("windows_type", survey.getWindowsType())
+                .setParameter("domain_joining_status", survey.getDomainJoiningStatus())
+                .setParameter("utility_contact_person_name", survey.getUtilityContactPersonName())
+                .setParameter("utility_contact_person_contact", survey.getUtilityContactPersonContact())
+                .setParameter("machine_make", survey.getMachineMake())
+                .executeUpdate();
+        return true;
     }
 
     public static <T> Iterable<T> skipFirst(final Iterable<T> c) {
@@ -91,8 +146,7 @@ public class SurveyService {
         return "Survey Added";
     }
 
-    public static String getMd5(String input)
-    {
+    public static String getMd5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());
@@ -102,8 +156,7 @@ public class SurveyService {
                 hashtext = "0" + hashtext;
             }
             return hashtext;
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
@@ -115,6 +168,7 @@ public class SurveyService {
     public List<String> getSurveyCities() {
         return entityManager.createNativeQuery("select distinct(city) from helpdesk.survey", String.class).getResultList();
     }
+
     public List<String> getSurveyCirclesToAddSurveyor() {
         return entityManager.createNativeQuery("select distinct(circle) from helpdesk.survey", String.class).getResultList();
     }
@@ -143,7 +197,7 @@ public class SurveyService {
     }
 
     public void deleteSurveyById(Long id, String loggedInUserId) throws Exception {
-        if(employeeService.isSuperAdmin(loggedInUserId)){
+        if (employeeService.isSuperAdmin(loggedInUserId)) {
             surveyRepository.deleteById(id);
         } else {
             throw new Exception("You are not authorized to delete survey");
@@ -151,15 +205,15 @@ public class SurveyService {
     }
 
     public List<Survey> fetchSurveyListByCity(String city) {
-        if(!city.equals("All")){
+        if (!city.equals("All")) {
             return surveyRepository.fetchSurveyListByCity(city);
-        }else {
+        } else {
             return surveyRepository.fetchAllSurveyList();
         }
     }
 
     public List<Survey> fetchSurveyListByCircle(String city) {
-            return surveyRepository.fetchSurveyListByCircle(city);
+        return surveyRepository.fetchSurveyListByCircle(city);
     }
 
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Survey> data, String city) throws IOException {
@@ -207,6 +261,11 @@ public class SurveyService {
                 .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .contentLength(resource.contentLength())
                 .body(resource);
+    }
+
+    public Long getLastSerialNumber() {
+        Query query = entityManager.createNativeQuery("select  max(id) from helpdesk.survey", Long.class);
+        return query.getSingleResult() != null ? ((Number) query.getSingleResult()).longValue() : 1;
     }
 
 }

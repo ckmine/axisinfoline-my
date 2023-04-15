@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"https://portal.axisinfoline.com","http://localhost:3000"})
 @RestController
@@ -21,12 +23,11 @@ public class SurveyController {
     private SurveyService surveyService;
 
     @RequestMapping(value = "/importSurvey", method = RequestMethod.POST)
-    public ResponseEntity<String> survey(@RequestParam("file") MultipartFile multipartFile) {
+    public String importSurvey(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         try {
-            surveyService.importSurvey(multipartFile);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return surveyService.importSurvey(multipartFile);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new Exception("Incorrect file format");
         }
 
     }
