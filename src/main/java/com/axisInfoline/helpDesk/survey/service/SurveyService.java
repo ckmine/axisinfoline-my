@@ -112,6 +112,9 @@ public class SurveyService {
     public List<String> getSurveyCities() {
         return entityManager.createNativeQuery("select distinct(city) from helpdesk.survey", String.class).getResultList();
     }
+    public List<String> getSurveyCirclesToAddSurveyor() {
+        return entityManager.createNativeQuery("select distinct(circle) from helpdesk.survey", String.class).getResultList();
+    }
 
     @Transactional
     public String updateSurvey(Survey survey) {

@@ -16,7 +16,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping(value = "/addEmployee")
-    public String addEmployee(@RequestBody Employee employee){
+    public String addEmployee(@RequestBody Employee employee) throws Exception {
         return employeeService.addEmployee(employee);
     }
 
@@ -33,6 +33,11 @@ public class EmployeeController {
     @GetMapping(value = "/getAllEngineers/{status}")
     public List<Employee> getAllEngineers(@PathVariable String status){
         return employeeService.getAllEngineers(status);
+    }
+
+    @GetMapping(value = "/getAllAeit/{status}")
+    public List<Employee> getAllAeit(@PathVariable String status){
+        return employeeService.getAllAeit(status);
     }
 
     @PostMapping(value = "/authenticated")

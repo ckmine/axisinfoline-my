@@ -74,4 +74,9 @@ public class SurveyController {
         return surveyService.getSurveyCities();
     }
 
+    @GetMapping("/getSurveyCirclesToAddSurveyor")
+    public List<String> getSurveyCirclesToAddSurveyor() {
+        return surveyService.getSurveyCirclesToAddSurveyor();
+    }
+
 }

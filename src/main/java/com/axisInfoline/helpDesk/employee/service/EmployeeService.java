@@ -27,10 +27,20 @@ public class EmployeeService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public String addEmployee(Employee employee){
-        employee.setId(getMd5(employee.getName()+employee.getPhone()+employee.getCircle()));
-        employeeJpaRepository.save(employee);
-        return "Employee Added";
+    public String addEmployee(Employee employee) throws Exception {
+//        if(!isUserWithCircleExists(employee.getPhone())){
+            employee.setId(getMd5(employee.getName()+employee.getPhone()+employee.getCircle()));
+            employeeJpaRepository.save(employee);
+            return "Employee Added";
+//        } else {
+//            throw new Exception("User Already Exists for circle: "+employee.getCircle());
+//        }
+
+    }
+
+    public Boolean isUserWithCircleExists(String circle){
+        Double count = ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee where circle=:circle", Double.class).setParameter("circle","circle").getSingleResult()).doubleValue();
+        return count > 0 ? true : false;
     }
 
     @Transactional
@@ -72,6 +82,15 @@ public class EmployeeService {
 
     public List<Employee> getAllEngineers(String status){
         List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'Engineer' and status=:status", Employee.class).setParameter("status",status).getResultList();
+        employees.forEach(e-> {
+            e.setPassword(null);
+            e.setRole(null);
+        });
+        return employees;
+    }
+
+    public List<Employee> getAllAeit(String status){
+        List<Employee> employees = entityManager.createNativeQuery("select id, name, phone,circle,password ,role, status from helpdesk.employee where role = 'aeit' and status=:status", Employee.class).setParameter("status",status).getResultList();
         employees.forEach(e-> {
             e.setPassword(null);
             e.setRole(null);
