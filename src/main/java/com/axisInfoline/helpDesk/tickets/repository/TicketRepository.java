@@ -1,9 +1,11 @@
 package com.axisInfoline.helpDesk.tickets.repository;
 
 import com.axisInfoline.helpDesk.core.domain.Count;
+import com.axisInfoline.helpDesk.survey.domain.Survey;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

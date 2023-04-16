@@ -2,14 +2,18 @@ package com.axisInfoline.helpDesk.tickets.controller;
 
 import com.axisInfoline.helpDesk.core.domain.Count;
 import com.axisInfoline.helpDesk.core.domain.SearchedText;
+import com.axisInfoline.helpDesk.survey.domain.Survey;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import com.axisInfoline.helpDesk.tickets.service.TicketService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +69,14 @@ public class TicketController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/exportTicketByComplaintNo")
+    public ResponseEntity<ByteArrayResource> exportSurveyByCity(HttpServletResponse response , @RequestBody List<String> complaintNoList) throws IOException {
+        List<Ticket> tickets = ticketService.fetchTicketListById(complaintNoList);
+        System.out.println(tickets);
+//        return ticketService.generateExcelFile(tickets);
+        return null;
     }
 
 }
