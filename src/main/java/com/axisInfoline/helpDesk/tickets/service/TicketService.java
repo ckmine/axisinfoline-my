@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -280,76 +281,85 @@ public class TicketService {
     }
 
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Ticket> data) throws IOException {
-//        Workbook workbook = new XSSFWorkbook();
-//        Sheet sheet = workbook.createSheet("All-Tickets");
-//        int rowCount = 0;
-//        Row headerRow = sheet.createRow(rowCount++);
-//        headerRow.createCell(0).setCellValue("S/no.");
-//        headerRow.createCell(1).setCellValue("Complaint No.");
-//        headerRow.createCell(2).setCellValue("Complaint  Date");
-//        headerRow.createCell(3).setCellValue("Complaint Time");
-//        headerRow.createCell(4).setCellValue("Location_code");
-//        headerRow.createCell(5).setCellValue("Circle");
-//        headerRow.createCell(6).setCellValue("Division");
-//        headerRow.createCell(7).setCellValue("Name of Location ");
-//        headerRow.createCell(8).setCellValue("Complainant  Name");
-//        headerRow.createCell(9).setCellValue("Complainant  Designation");
-//        headerRow.createCell(10).setCellValue("Contact No.");
-//        headerRow.createCell(11).setCellValue("Defective Item Name");
-//        headerRow.createCell(12).setCellValue("M/c S/no.");
-//        headerRow.createCell(13).setCellValue("Problem Reported");
-//        headerRow.createCell(14).setCellValue("Engineer Assigned");
-//        headerRow.createCell(15).setCellValue("Engineer contact No.");
-//        headerRow.createCell(16).setCellValue("Complaint Attempts I Date and Time");
-//        headerRow.createCell(17).setCellValue("Complaint Attempts II Date and Time");
-//        headerRow.createCell(18).setCellValue("Complaint Attempts III Date and Time");
-//        headerRow.createCell(19).setCellValue("Complaint  Completion date");
-//        headerRow.createCell(20).setCellValue("Complaint Completion Time");
-//        headerRow.createCell(21).setCellValue("Complaint Status");
-//        headerRow.createCell(22).setCellValue("Action taken & Spare used");
-//        headerRow.createCell(23).setCellValue("Old Serial No.  MB/HDD/TFT");
-//        headerRow.createCell(24).setCellValue("New Serial No.MB/HDD/TFT");
-//        headerRow.createCell(25).setCellValue("Complaint  Attend Hours");
-//        headerRow.createCell(26).setCellValue("Complaint Completion in days");
-//        headerRow.createCell(27).setCellValue("Complaint Completion n in Hours");
-//        headerRow.createCell(28).setCellValue("Remarks");
-//
-//        for (Ticket ticket : data) {
-//            Row row = sheet.createRow(rowCount++);
-//
-//            row.createCell(0).setCellValue(++rowCount);
-//            row.createCell(1).setCellValue(ticket.getComplaintNo());
-//            row.createCell(2).setCellValue(ticket.getDivision());
-//            row.createCell(3).setCellValue(ticket.getSubdivision());
-//            row.createCell(4).setCellValue(ticket.getEndLocationAddress());
-//            row.createCell(5).setCellValue(ticket.getItHardwareName());
-//            row.createCell(6).setCellValue(ticket.getModel());
-//            row.createCell(7).setCellValue(ticket.getSerialNo());
-//            row.createCell(8).setCellValue(ticket.getUpsBatteryStatus());
-//            row.createCell(9).setCellValue(ticket.getWindowsType());
-//            row.createCell(10).setCellValue(ticket.getDomainJoiningStatus());
-//            row.createCell(11).setCellValue(ticket.getUtilityContactPersonName());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//            row.createCell(12).setCellValue(ticket.getUtilityContactPersonContact());
-//        }
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        workbook.write(baos);
-//        ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
-//        workbook.close();
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=survey.xlsx")
-//                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-//                .contentLength(resource.contentLength())
-//                .body(resource);
-        return null;
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("All-Tickets");
+        int rowCount = 0;
+        Row headerRow = sheet.createRow(rowCount++);
+        headerRow.createCell(0).setCellValue("S/no.");
+        headerRow.createCell(1).setCellValue("Complaint No.");
+        headerRow.createCell(2).setCellValue("Complaint  Date");
+        headerRow.createCell(3).setCellValue("Complaint Time");
+        headerRow.createCell(4).setCellValue("Location_code");
+        headerRow.createCell(5).setCellValue("Circle");
+        headerRow.createCell(6).setCellValue("Division");
+        headerRow.createCell(7).setCellValue("Name of Location ");
+        headerRow.createCell(8).setCellValue("Complainant  Name");
+        headerRow.createCell(9).setCellValue("Complainant  Designation");
+        headerRow.createCell(10).setCellValue("Contact No.");
+        headerRow.createCell(11).setCellValue("Defective Item Name");
+        headerRow.createCell(12).setCellValue("M/c S/no.");
+        headerRow.createCell(13).setCellValue("Problem Reported");
+        headerRow.createCell(14).setCellValue("Engineer Assigned");
+        headerRow.createCell(15).setCellValue("Engineer contact No.");
+        headerRow.createCell(16).setCellValue("Complaint Attempts I Date and Time");
+        headerRow.createCell(17).setCellValue("Complaint Attempts II Date and Time");
+        headerRow.createCell(18).setCellValue("Complaint Attempts III Date and Time");
+        headerRow.createCell(19).setCellValue("Complaint  Completion date");
+        headerRow.createCell(20).setCellValue("Complaint Completion Time");
+        headerRow.createCell(21).setCellValue("Complaint Status");
+        headerRow.createCell(22).setCellValue("Action taken & Spare used");
+        headerRow.createCell(23).setCellValue("Old Serial No.  MB/HDD/TFT");
+        headerRow.createCell(24).setCellValue("New Serial No.MB/HDD/TFT");
+        headerRow.createCell(25).setCellValue("Complaint  Attend Hours");
+        headerRow.createCell(26).setCellValue("Complaint Completion in days");
+        headerRow.createCell(27).setCellValue("Complaint Completion n in Hours");
+        headerRow.createCell(28).setCellValue("Remarks");
+
+        for (Ticket ticket : data) {
+            Row row = sheet.createRow(rowCount++);
+
+            row.createCell(0).setCellValue(++rowCount);
+            row.createCell(1).setCellValue(ticket.getComplaintNo());
+            row.createCell(2).setCellValue(ticket.getComplaintDatetime().format(dateFormat));
+            row.createCell(3).setCellValue(ticket.getComplaintDatetime().format(timeFormat));
+            row.createCell(4).setCellValue(ticket.getLocationCode());
+            row.createCell(5).setCellValue(ticket.getCircle());
+            row.createCell(6).setCellValue(ticket.getDivision());
+            row.createCell(7).setCellValue(ticket.getSubstation());
+            row.createCell(8).setCellValue(ticket.getComplainantName());
+            row.createCell(9).setCellValue(ticket.getComplainantDesignation());
+            row.createCell(10).setCellValue(ticket.getComplainantContactNo());
+            row.createCell(11).setCellValue(ticket.getDefectiveItemName());
+            row.createCell(12).setCellValue(ticket.getUxb1jsi364g4453780());
+            row.createCell(13).setCellValue(ticket.getProblemType());
+            row.createCell(14).setCellValue(ticket.getEngineerAssigned());
+            row.createCell(15).setCellValue(ticket.getEngineerContactNo());
+            row.createCell(16).setCellValue(ticket.getComplaintAttemptsFirstDateAndTime().format(dateTimeFormat));
+            row.createCell(17).setCellValue(ticket.getComplaintAttemptsSecondDateAndTime().format(dateTimeFormat));
+            row.createCell(18).setCellValue(ticket.getComplaintAttemptsThirdDateAndTime().format(dateTimeFormat));
+            row.createCell(19).setCellValue(ticket.getComplaintCompletionDatetime().format(dateFormat));
+            row.createCell(20).setCellValue(ticket.getComplaintCompletionDatetime().format(timeFormat));
+            row.createCell(21).setCellValue(ticket.getStatus());
+            row.createCell(22).setCellValue(ticket.getActionTakenAndSpareUsed());
+            row.createCell(23).setCellValue(ticket.getOldSerialNoMbHddTft());
+            row.createCell(24).setCellValue(ticket.getNewSerialNoMbHddTft());
+            row.createCell(25).setCellValue(ticket.getComplaintAttendHours());
+            row.createCell(26).setCellValue(ticket.getComplaintCompletionInDays());
+            row.createCell(27).setCellValue(ticket.getComplaintCompletionInHour());
+            row.createCell(28).setCellValue(ticket.getRemarks());
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        workbook.write(baos);
+        ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
+        workbook.close();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=survey.xlsx")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .contentLength(resource.contentLength())
+                .body(resource);
     }
 
     public List<Ticket> fetchTicketListById(List<String> complaintNoList) {
