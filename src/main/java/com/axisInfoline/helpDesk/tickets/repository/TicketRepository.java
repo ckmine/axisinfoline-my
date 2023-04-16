@@ -168,7 +168,7 @@ public class TicketRepository {
 
     @Transactional
     public String updateTicketByEngineer(Ticket ticket) {
-        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft,  remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime, doc_path=:docPath,approved=:approved,approver_name:approverName,approver_phone:=approverPhone WHERE serial_no=:serialNo")
+        entityManager.createNativeQuery("UPDATE helpdesk.tickets set defective_item_name=:defectiveItemName, uxb1jsi364g4453780=:uxb1jsi364g4453780, status=:status, action_taken_and_spare_used=:actionTakenAndSpareUsed, old_serial_no_mb_hdd_tft=:oldSerialNoMbHddTft, new_serial_no_mb_hdd_tft=:newSerialNoMbHddTft,  remarks=:remarks, machine_make=:machineMake, problem_type=:problemType, complaint_completion_datetime=:complaintCompletionDatetime, doc_path=:docPath,approved=:approved,approver_name=:approverName,approver_phone=:approverPhone,complaint_attempts_first_date_and_time=:complaintAttemptsFirstDateAndTime, complaint_attempts_second_date_and_time=:complaintAttemptsSecondDateAndTime, complaint_attempts_third_date_and_time=:complaintAttemptsThirdDateAndTime, location_code=:locationCode, complaint_attend_hours=:complaintAttendHours, complaint_completion_in_days=:complaintCompletionInDays, complaint_completion_in_hour=:complaintCompletionInHour WHERE serial_no=:serialNo")
                 .setParameter("defectiveItemName", ticket.getDefectiveItemName())
                 .setParameter("uxb1jsi364g4453780", ticket.getUxb1jsi364g4453780())
                 .setParameter("status", ticket.getStatus())
@@ -183,7 +183,13 @@ public class TicketRepository {
                 .setParameter("docPath", ticket.getDocPath())
                 .setParameter("approved", ticket.getDocPath())
                 .setParameter("approverName", ticket.getDocPath())
-                .setParameter("approverPhone", ticket.getDocPath())
+                .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
+                .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
+                .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
+                .setParameter("locationCode", ticket.getDocPath())
+                .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
+                .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
+                .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
                 .executeUpdate();
         return "Ticket Successfully updated";
     }

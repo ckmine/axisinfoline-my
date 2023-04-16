@@ -24,6 +24,10 @@ public class Ticket {
     String engineerAssigned;
     LocalDateTime engineerAssignedDateTime;
     String engineerContactNo;
+    LocalDateTime complaintAttemptsFirstDateAndTime;
+    LocalDateTime complaintAttemptsSecondDateAndTime;
+    LocalDateTime complaintAttemptsThirdDateAndTime;
+    String locationCode;
     LocalDateTime complaintCompletionDatetime;
     String status;
     String actionTakenAndSpareUsed;
@@ -41,6 +45,9 @@ public class Ticket {
     Boolean approved;
     String approverName;
     String approverPhone;
+    String complaintAttendHours;
+    String complaintCompletionInDays;
+    String complaintCompletionInHour;
 
     public String getId() {
         return id;
@@ -290,39 +297,59 @@ public class Ticket {
         this.approverPhone = approverPhone;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id='" + id + '\'' +
-                ", serialNo=" + serialNo +
-                ", complaintNo='" + complaintNo + '\'' +
-                ", complaintDatetime=" + complaintDatetime +
-                ", circle='" + circle + '\'' +
-                ", division='" + division + '\'' +
-                ", complainantName='" + complainantName + '\'' +
-                ", complainantDesignation='" + complainantDesignation + '\'' +
-                ", complainantContactNo='" + complainantContactNo + '\'' +
-                ", defectiveItemName='" + defectiveItemName + '\'' +
-                ", uxb1jsi364g4453780='" + uxb1jsi364g4453780 + '\'' +
-                ", engineerAssigned='" + engineerAssigned + '\'' +
-                ", engineerContactNo='" + engineerContactNo + '\'' +
-                ", complaintCompletionDatetime=" + complaintCompletionDatetime +
-                ", status='" + status + '\'' +
-                ", actionTakenAndSpareUsed='" + actionTakenAndSpareUsed + '\'' +
-                ", oldSerialNoMbHddTft='" + oldSerialNoMbHddTft + '\'' +
-                ", newSerialNoMbHddTft='" + newSerialNoMbHddTft + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", projectName='" + projectName + '\'' +
-                ", product='" + product + '\'' +
-                ", machineMake='" + machineMake + '\'' +
-                ", problemType='" + problemType + '\'' +
-                ", substation='" + substation + '\'' +
-                ", landmark='" + landmark + '\'' +
-                ", pinCode='" + pinCode + '\'' +
-                ", docPath='" + docPath + '\'' +
-                ", approved='" + docPath + '\'' +
-                ", approverName='" + docPath + '\'' +
-                ", approverPhone='" + docPath + '\'' +
-                '}';
+    public LocalDateTime getComplaintAttemptsFirstDateAndTime() {
+        return complaintAttemptsFirstDateAndTime;
+    }
+
+    public void setComplaintAttemptsFirstDateAndTime(LocalDateTime complaintAttemptsFirstDateAndTime) {
+        this.complaintAttemptsFirstDateAndTime = complaintAttemptsFirstDateAndTime;
+    }
+
+    public LocalDateTime getComplaintAttemptsSecondDateAndTime() {
+        return complaintAttemptsSecondDateAndTime;
+    }
+
+    public void setComplaintAttemptsSecondDateAndTime(LocalDateTime complaintAttemptsSecondDateAndTime) {
+        this.complaintAttemptsSecondDateAndTime = complaintAttemptsSecondDateAndTime;
+    }
+
+    public LocalDateTime getComplaintAttemptsThirdDateAndTime() {
+        return complaintAttemptsThirdDateAndTime;
+    }
+
+    public void setComplaintAttemptsThirdDateAndTime(LocalDateTime complaintAttemptsThirdDateAndTime) {
+        this.complaintAttemptsThirdDateAndTime = complaintAttemptsThirdDateAndTime;
+    }
+
+    public String getLocationCode() {
+        return locationCode;
+    }
+
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
+    }
+
+    public String getComplaintAttendHours() {
+        return complaintAttendHours;
+    }
+
+    public void setComplaintAttendHours(String complaintAttendHours) {
+        this.complaintAttendHours = complaintAttendHours;
+    }
+
+    public String getComplaintCompletionInDays() {
+        return complaintCompletionInDays;
+    }
+
+    public void setComplaintCompletionInDays(String complaintCompletionInDays) {
+        this.complaintCompletionInDays = complaintCompletionInDays;
+    }
+
+    public String getComplaintCompletionInHour() {
+        return complaintCompletionInHour;
+    }
+
+    public void setComplaintCompletionInHour(String complaintCompletionInHour) {
+        this.complaintCompletionInHour = complaintCompletionInHour;
     }
 }
