@@ -1,14 +1,10 @@
 package com.axisInfoline.helpDesk.admin.service;
 
 import com.axisInfoline.helpDesk.core.domain.Count;
-import com.axisInfoline.helpDesk.employee.domain.Employee;
-import com.axisInfoline.helpDesk.employee.repository.EmployeeJpaRepository;
 import com.axisInfoline.helpDesk.employee.service.EmployeeService;
-import com.axisInfoline.helpDesk.location.repository.LocationJpaRepository;
 import com.axisInfoline.helpDesk.location.service.LocationService;
 import com.axisInfoline.helpDesk.survey.repository.SurveyJpaRepository;
 import com.axisInfoline.helpDesk.tickets.repository.TicketRepository;
-import com.axisInfoline.helpDesk.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +36,9 @@ public class AdminService {
             Map<String, Double> ticketsCountMatrics = new HashMap<>();
             List<Count> ticketsCountMatricesForAdmin = ticketRepository.getTicketsCountMatricesForAdmin();
             ticketsCountMatricesForAdmin.forEach(data -> {
-                ticketsCountMatrics.put(data.getName(),data.getCount());
+                if(data != null){
+                    ticketsCountMatrics.put(data.getName(),data.getCount());
+                }
             });
             ticketsCountMatrics.put("currentMonthCreatedTicket",ticketRepository.getCurrentMonthCreatedTicket(currentDateTime().with(firstDayOfMonth()),currentDateTime().with(lastDayOfMonth())));
             ticketsCountMatrics.put("currentMonthClosedTicket",ticketRepository.getCurrentMonthClosedTicket(currentDateTime().with(firstDayOfMonth()),currentDateTime().with(lastDayOfMonth())));
