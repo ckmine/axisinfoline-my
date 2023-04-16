@@ -5,13 +5,16 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name ="survey")
+
 public class Survey {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
     private String circle;
     private String division;
     private String subdivision;
+
     private String endLocationAddress;
     private String itHardwareName;
     private String machineMake;

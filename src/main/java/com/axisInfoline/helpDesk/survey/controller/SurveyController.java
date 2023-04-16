@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"https://portal.axisinfoline.com","http://localhost:3000"})
 @RestController
@@ -21,12 +25,11 @@ public class SurveyController {
     private SurveyService surveyService;
 
     @RequestMapping(value = "/importSurvey", method = RequestMethod.POST)
-    public ResponseEntity<String> survey(@RequestParam("file") MultipartFile multipartFile) {
+    public String importSurvey(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         try {
-            surveyService.importSurvey(multipartFile);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return surveyService.importSurvey(multipartFile);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new Exception("Incorrect file format");
         }
 
     }
@@ -67,6 +70,12 @@ public class SurveyController {
     public ResponseEntity<ByteArrayResource> exportSurveyByCity(HttpServletResponse response , @PathVariable String city) throws IOException {
         List<Survey> surveys = surveyService.fetchSurveyListByCity(city);
         return surveyService.generateExcelFile(surveys,city);
+    }
+
+    @PostMapping("/exportSurveyById")
+    public ResponseEntity<ByteArrayResource> exportSurveyById(HttpServletResponse response , @RequestBody List<Integer> ids) throws IOException {
+        List<Survey> surveys = surveyService.fetchSurveyListById(ids);
+        return surveyService.generateExcelFile(surveys,"Exported-Survey-"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 
     @GetMapping("/getSurveyCities")
