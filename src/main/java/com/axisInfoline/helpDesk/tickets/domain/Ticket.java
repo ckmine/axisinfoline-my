@@ -38,6 +38,9 @@ public class Ticket {
     String landmark;
     String pinCode;
     String docPath;
+    Boolean approved;
+    String approverName;
+    String approverPhone;
 
     public String getId() {
         return id;
@@ -263,6 +266,30 @@ public class Ticket {
         this.docPath = docPath;
     }
 
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public String getApproverName() {
+        return approverName;
+    }
+
+    public void setApproverName(String approverName) {
+        this.approverName = approverName;
+    }
+
+    public String getApproverPhone() {
+        return approverPhone;
+    }
+
+    public void setApproverPhone(String approverPhone) {
+        this.approverPhone = approverPhone;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
@@ -293,6 +320,9 @@ public class Ticket {
                 ", landmark='" + landmark + '\'' +
                 ", pinCode='" + pinCode + '\'' +
                 ", docPath='" + docPath + '\'' +
+                ", approved='" + docPath + '\'' +
+                ", approverName='" + docPath + '\'' +
+                ", approverPhone='" + docPath + '\'' +
                 '}';
     }
 }

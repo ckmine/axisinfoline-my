@@ -1,6 +1,6 @@
 package com.axisInfoline.helpDesk.survey.service;
 
-import com.axisInfoline.helpDesk.location.repository.LocationJpaRepository;
+import com.axisInfoline.helpDesk.employee.service.EmployeeService;
 import com.axisInfoline.helpDesk.survey.domain.Survey;
 import com.axisInfoline.helpDesk.survey.repository.SurveyJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -32,6 +32,9 @@ public class SurveyService {
 
     @Autowired
     SurveyJpaRepository surveyRepository;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -112,6 +115,9 @@ public class SurveyService {
     public List<String> getSurveyCities() {
         return entityManager.createNativeQuery("select distinct(city) from helpdesk.survey", String.class).getResultList();
     }
+    public List<String> getSurveyCirclesToAddSurveyor() {
+        return entityManager.createNativeQuery("select distinct(circle) from helpdesk.survey", String.class).getResultList();
+    }
 
     @Transactional
     public String updateSurvey(Survey survey) {
@@ -131,16 +137,17 @@ public class SurveyService {
                     newSurvey.setDomainJoiningStatus(survey.getDomainJoiningStatus());
                     newSurvey.setUtilityContactPersonName(survey.getUtilityContactPersonName());
                     newSurvey.setUtilityContactPersonContact(survey.getUtilityContactPersonContact());
-                    newSurvey.setApproved(survey.getApproved());
-                    newSurvey.setApproverPhone(survey.getApproverPhone());
-                    newSurvey.setApproverName(survey.getApproverName());
                     surveyRepository.save(newSurvey);
                 });
         return "Survey Updated";
     }
 
-    public void deleteSurveyById(Long id) {
-        surveyRepository.deleteById(id);
+    public void deleteSurveyById(Long id, String loggedInUserId) throws Exception {
+        if(employeeService.isSuperAdmin(loggedInUserId)){
+            surveyRepository.deleteById(id);
+        } else {
+            throw new Exception("You are not authorized to delete survey");
+        }
     }
 
     public List<Survey> fetchSurveyListByCity(String city) {

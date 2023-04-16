@@ -1,6 +1,7 @@
 package com.axisInfoline.helpDesk.tickets.service;
 
 import com.axisInfoline.helpDesk.core.domain.Count;
+import com.axisInfoline.helpDesk.employee.service.EmployeeService;
 import com.axisInfoline.helpDesk.tickets.domain.Ticket;
 import com.axisInfoline.helpDesk.tickets.repository.TicketJpaRepository;
 import com.axisInfoline.helpDesk.tickets.repository.TicketRepository;
@@ -36,6 +37,9 @@ public class TicketService {
     TicketRepository ticketRepository;
 
     @Autowired
+    EmployeeService employeeService;
+
+    @Autowired
     TicketJpaRepository ticketJpaRepository;
 
     public String createTicket(Ticket ticket) {
@@ -57,12 +61,16 @@ public class TicketService {
         return String.format("%06d", number);
     }
 
-    public String updateTicketByAdmin(Ticket ticket) {
-//      ticketRepository.updateTicketByAdmin(ticket);
-        System.out.println(ticket);
-        ticket.setStatus(ticket.getStatus().toUpperCase());
-        ticketJpaRepository.save(ticket);
-        return "Ticket updated";
+    public String updateTicketByAdmin(Ticket ticket, String loggedInUserId) throws Exception {
+        if(employeeService.isAdmin(loggedInUserId) || employeeService.isSuperAdmin(loggedInUserId) || employeeService.isAeit(loggedInUserId)){
+            //      ticketRepository.updateTicketByAdmin(ticket);
+            System.out.println(ticket);
+            ticket.setStatus(ticket.getStatus().toUpperCase());
+            ticketJpaRepository.save(ticket);
+            return "Ticket updated";
+        } else {
+            throw new Exception("You are not authorized to see this data");
+        }
     }
 
     public String updateTicketByEngineer(Ticket ticket) {
@@ -91,8 +99,12 @@ public class TicketService {
         return ticketRepository.getAllTicketsByPhoneNo(phone, status, convertStringToLocalDateTime(fromDate), convertStringToLocalDateTime(toDate));
     }
 
-    public String deleteTicket(String complaintNumber) {
-        return ticketRepository.deleteTicket(complaintNumber);
+    public String deleteTicket(String complaintNumber, String loggedInUserId) throws Exception {
+        if(employeeService.isSuperAdmin(loggedInUserId)){
+            return ticketRepository.deleteTicket(complaintNumber);
+        } else {
+            throw new Exception("You are not authorized to see this data");
+        }
     }
 
     public LocalDateTime concatDateAndTime(String date, String time) {

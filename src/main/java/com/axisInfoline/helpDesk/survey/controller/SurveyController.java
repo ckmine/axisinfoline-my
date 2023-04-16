@@ -57,9 +57,9 @@ public class SurveyController {
     }
 
 
-    @DeleteMapping("/deleteSurvey/{id}")
-    public String deleteSurveyById(@PathVariable("id") Long id) {
-        surveyService.deleteSurveyById(id);
+    @DeleteMapping("/deleteSurvey/{id}/loggedInUserId/{loggedInUserId}")
+    public String deleteSurveyById(@PathVariable("id") Long id, @PathVariable String loggedInUserId) throws Exception {
+        surveyService.deleteSurveyById(id, loggedInUserId);
         return "Deleted Successfully";
     }
 
@@ -72,6 +72,11 @@ public class SurveyController {
     @GetMapping("/getSurveyCities")
     public List<String> getSurveyCities() {
         return surveyService.getSurveyCities();
+    }
+
+    @GetMapping("/getSurveyCirclesToAddSurveyor")
+    public List<String> getSurveyCirclesToAddSurveyor() {
+        return surveyService.getSurveyCirclesToAddSurveyor();
     }
 
 }
