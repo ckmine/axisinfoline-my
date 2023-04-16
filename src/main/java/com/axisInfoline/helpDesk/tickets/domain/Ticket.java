@@ -45,9 +45,9 @@ public class Ticket {
     Boolean approved;
     String approverName;
     String approverPhone;
-    String complaintAttendHours;
-    String complaintCompletionInDays;
-    String complaintCompletionInHour;
+    Double complaintAttendHours;
+    Double complaintCompletionInDays;
+    Double complaintCompletionInHour;
 
     public String getId() {
         return id;
@@ -329,27 +329,27 @@ public class Ticket {
         this.locationCode = locationCode;
     }
 
-    public String getComplaintAttendHours() {
+    public Double getComplaintAttendHours() {
         return complaintAttendHours;
     }
 
-    public void setComplaintAttendHours(String complaintAttendHours) {
+    public void setComplaintAttendHours(Double complaintAttendHours) {
         this.complaintAttendHours = complaintAttendHours;
     }
 
-    public String getComplaintCompletionInDays() {
+    public Double getComplaintCompletionInDays() {
         return complaintCompletionInDays;
     }
 
-    public void setComplaintCompletionInDays(String complaintCompletionInDays) {
+    public void setComplaintCompletionInDays(Double complaintCompletionInDays) {
         this.complaintCompletionInDays = complaintCompletionInDays;
     }
 
-    public String getComplaintCompletionInHour() {
+    public Double getComplaintCompletionInHour() {
         return complaintCompletionInHour;
     }
 
-    public void setComplaintCompletionInHour(String complaintCompletionInHour) {
+    public void setComplaintCompletionInHour(Double complaintCompletionInHour) {
         this.complaintCompletionInHour = complaintCompletionInHour;
     }
 }

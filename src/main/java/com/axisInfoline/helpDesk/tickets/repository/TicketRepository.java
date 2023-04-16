@@ -83,6 +83,13 @@ public class TicketRepository {
                         "old_serial_no_mb_hdd_tft," +
                         "new_serial_no_mb_hdd_tft," +
                         "remarks," +
+                        "complaint_attempts_first_date_and_time," +
+                        "complaint_attempts_second_date_and_time," +
+                        "complaint_attempts_third_date_and_time," +
+                        "location_code," +
+                        "complaint_attend_hours," +
+                        "complaint_completion_in_days," +
+                        "complaint_completion_in_hour," +
                         "complaint_completion_datetime) " +
                         "VALUES (:id,:complaintNo," +
                         ":complainantName," +
@@ -106,6 +113,13 @@ public class TicketRepository {
                         ":oldSerialNoMbHddTft," +
                         ":newSerialNoMbHddTft," +
                         ":remarks," +
+                        ":complaintAttemptsFirstDateAndTime," +
+                        ":complaintAttemptsSecondDateAndTime," +
+                        ":complaintAttemptsThirdDateAndTime," +
+                        ":locationCode," +
+                        ":complaintAttendHours," +
+                        ":complaintCompletionInDays," +
+                        ":complaintCompletionInHour," +
                         ":complaintCompletionDatetime)")
                 .setParameter("id", ticket.getId())
                 .setParameter("complaintNo",ticket.getComplaintNo())
@@ -130,6 +144,13 @@ public class TicketRepository {
                 .setParameter("oldSerialNoMbHddTft", ticket.getOldSerialNoMbHddTft())
                 .setParameter("newSerialNoMbHddTft", ticket.getNewSerialNoMbHddTft())
                 .setParameter("remarks", ticket.getRemarks())
+                .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
+                .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
+                .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
+                .setParameter("locationCode", ticket.getLocationCode())
+                .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
+                .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
+                .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
                 .setParameter("complaintCompletionDatetime", ticket.getComplaintCompletionDatetime())
                 .executeUpdate();
         return ticket.getComplaintNo();
