@@ -204,6 +204,7 @@ public class TicketRepository {
                 .setParameter("docPath", ticket.getDocPath())
                 .setParameter("approved", ticket.getDocPath())
                 .setParameter("approverName", ticket.getDocPath())
+                .setParameter("approverPhone", ticket.getApproverPhone())
                 .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
                 .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
                 .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
