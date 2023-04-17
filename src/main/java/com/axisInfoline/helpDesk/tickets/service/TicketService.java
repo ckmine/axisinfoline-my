@@ -386,5 +386,16 @@ public class TicketService {
         return ticketJpaRepository.fetchSurveyListById(complaintNoList);
     }
 
+    public Map<String, List<String>> getTicketDropDownMatrix(String loggedInUserId) throws Exception {
+        if(employeeService.isUserExists(loggedInUserId)){
+            Map<String, List<String>> matrix = new HashMap<>();
+            matrix.put("assignedEngineerList",ticketRepository.getAssignedEngineers());
+            matrix.put("assignedEngineerContactNoList",ticketRepository.getEngineerContactNo());
+            return matrix;
+        } else {
+            throw new Exception("You are not authorized");
+        }
+    }
+
 
 }

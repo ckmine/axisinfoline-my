@@ -1,5 +1,6 @@
 package com.axisInfoline.helpDesk.location.service;
 
+import com.axisInfoline.helpDesk.employee.service.EmployeeService;
 import com.axisInfoline.helpDesk.location.domain.Location;
 import com.axisInfoline.helpDesk.location.repository.LocationJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -24,8 +25,19 @@ public class LocationService {
     @Autowired
     LocationJpaRepository locationJpaRepository;
 
+    @Autowired
+    EmployeeService employeeService;
+
     @PersistenceContext
     private EntityManager entityManager;
+
+    public List<Location> getAllLocations(String loggedInUserId) throws Exception {
+        if(employeeService.isAdmin(loggedInUserId) || employeeService.isSuperAdmin(loggedInUserId)){
+            return entityManager.createNativeQuery("select * from helpdesk.location", Location.class).getResultList();
+        } else {
+            throw new Exception("You are not authorized to see location data");
+        }
+    }
 
     public List<String> getAllCircles(){
         return entityManager.createNativeQuery("select distinct(circle) from helpdesk.location", String.class).getResultList();

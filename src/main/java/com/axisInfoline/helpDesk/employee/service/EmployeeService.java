@@ -48,6 +48,11 @@ public class EmployeeService {
         return count > 0 ? true : false;
     }
 
+    public Boolean isUserExists(String id){
+        Double count = ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee", Double.class).getSingleResult()).doubleValue();
+        return count > 0 ? true : false;
+    }
+
     @Transactional
     public String updateEmployee(Employee employee, String loggedInUserId) throws Exception {
         if(isAdmin(loggedInUserId) || isSuperAdmin(loggedInUserId)){

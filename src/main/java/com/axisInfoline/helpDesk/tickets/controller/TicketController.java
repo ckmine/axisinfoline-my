@@ -77,4 +77,9 @@ public class TicketController {
         return ticketService.generateExcelFile(tickets);
     }
 
+    @GetMapping("/getTicketDropDownMatrix/loggedInUserId/{loggedInUserId}")
+    public Map<String, List<String>> getTicketDropDownMatrix(@PathVariable String loggedInUserId) throws Exception {
+        return ticketService.getTicketDropDownMatrix(loggedInUserId);
+    }
+
 }

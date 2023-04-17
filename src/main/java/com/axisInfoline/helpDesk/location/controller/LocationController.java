@@ -17,6 +17,11 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+    @GetMapping(value = "/getAllLocations/loggedInUserId/{loggedInUserId}")
+    public List<Location> getAllLocations(@PathVariable String loggedInUserId) throws Exception {
+        return locationService.getAllLocations(loggedInUserId);
+    }
+
     @GetMapping(value = "/getAllCircles")
         public List<String> getAllCircles(){
         return locationService.getAllCircles();

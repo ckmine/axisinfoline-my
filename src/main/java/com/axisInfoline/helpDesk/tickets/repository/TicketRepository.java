@@ -204,13 +204,13 @@ public class TicketRepository {
                 .setParameter("complaintCompletionDatetime", ticket.getComplaintCompletionDatetime())
                 .setParameter("serialNo", ticket.getSerialNo())
                 .setParameter("docPath", ticket.getDocPath())
-                .setParameter("approved", ticket.getDocPath())
-                .setParameter("approverName", ticket.getDocPath())
+                .setParameter("approved", ticket.getApproved())
+                .setParameter("approverName", ticket.getApproverName())
                 .setParameter("approverPhone", ticket.getApproverPhone())
                 .setParameter("complaintAttemptsFirstDateAndTime", ticket.getComplaintAttemptsFirstDateAndTime())
                 .setParameter("complaintAttemptsSecondDateAndTime", ticket.getComplaintAttemptsSecondDateAndTime())
                 .setParameter("complaintAttemptsThirdDateAndTime", ticket.getComplaintAttemptsThirdDateAndTime())
-                .setParameter("locationCode", ticket.getDocPath())
+                .setParameter("locationCode", ticket.getLocationCode())
                 .setParameter("complaintAttendHours", ticket.getComplaintAttendHours())
                 .setParameter("complaintCompletionInDays", ticket.getComplaintCompletionInDays())
                 .setParameter("complaintCompletionInHour", ticket.getComplaintCompletionInHour())
@@ -228,6 +228,14 @@ public class TicketRepository {
 
     public List<Count> getTicketsCountMatricesForAdmin(){
         return entityManager.createNativeQuery("select status as name,count(*) as count from helpdesk.tickets group by status", Count.class).getResultList();
+    }
+
+    public List<String> getAssignedEngineers(){
+        return entityManager.createNativeQuery("select distinct(engineer_assigned) from helpdesk.tickets WHERE engineer_assigned IS NOT NULL",String.class).getResultList();
+    }
+
+    public List<String> getEngineerContactNo(){
+        return entityManager.createNativeQuery("select distinct(engineer_contact_no) from helpdesk.tickets WHERE engineer_contact_no IS NOT NULL",String.class).getResultList();
     }
 
     public Double getCurrentMonthCreatedTicket(LocalDateTime startDate, LocalDateTime endDate){
