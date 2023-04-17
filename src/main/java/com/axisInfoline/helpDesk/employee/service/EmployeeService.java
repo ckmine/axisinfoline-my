@@ -141,7 +141,7 @@ public class EmployeeService {
     }
 
     public Double getActiveEngineerForAdmin(){
-        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee where status=:status", Double.class).setParameter("status","Active").getSingleResult()).doubleValue();
+        return ((Number) entityManager.createNativeQuery("select  count(*) from helpdesk.employee where role = 'Engineer' and status=:status", Double.class).setParameter("status","Active").getSingleResult()).doubleValue();
     }
 
     public Boolean isAdmin(String id){

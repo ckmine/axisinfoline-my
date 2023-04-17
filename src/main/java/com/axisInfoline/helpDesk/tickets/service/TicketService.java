@@ -141,6 +141,7 @@ public class TicketService {
                     if((!StringUtils.isEmpty(row.getCell(1).getStringCellValue()))){
                         ticket.setComplaintNo(row.getCell(1).getStringCellValue());
                     }
+
                     if(row.getCell(3).getDateCellValue() != null){
                         ticket.setComplaintDatetime(LocalDateTime.of(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(2).getDateCellValue())), LocalTime.parse(new SimpleDateFormat("HH:mm:ss").format(row.getCell(3).getDateCellValue()))));
                     } else if(row.getCell(2).getDateCellValue() != null) {
@@ -337,11 +338,21 @@ public class TicketService {
             row.createCell(13).setCellValue(ticket.getProblemType());
             row.createCell(14).setCellValue(ticket.getEngineerAssigned());
             row.createCell(15).setCellValue(ticket.getEngineerContactNo());
-            row.createCell(16).setCellValue(ticket.getComplaintAttemptsFirstDateAndTime().format(dateTimeFormat));
-            row.createCell(17).setCellValue(ticket.getComplaintAttemptsSecondDateAndTime().format(dateTimeFormat));
-            row.createCell(18).setCellValue(ticket.getComplaintAttemptsThirdDateAndTime().format(dateTimeFormat));
-            row.createCell(19).setCellValue(ticket.getComplaintCompletionDatetime().format(dateFormat));
-            row.createCell(20).setCellValue(ticket.getComplaintCompletionDatetime().format(timeFormat));
+            if(ticket.getComplaintAttemptsFirstDateAndTime() != null){
+                row.createCell(16).setCellValue(ticket.getComplaintAttemptsFirstDateAndTime().format(dateTimeFormat));
+            }
+            if(ticket.getComplaintAttemptsSecondDateAndTime() != null){
+                row.createCell(17).setCellValue(ticket.getComplaintAttemptsSecondDateAndTime().format(dateTimeFormat));
+            }
+            if(ticket.getComplaintAttemptsThirdDateAndTime() != null){
+                row.createCell(18).setCellValue(ticket.getComplaintAttemptsThirdDateAndTime().format(dateTimeFormat));
+            }
+            if(ticket.getComplaintCompletionDatetime() != null){
+                row.createCell(19).setCellValue(ticket.getComplaintCompletionDatetime().format(dateFormat));
+            }
+            if(ticket.getComplaintCompletionDatetime() != null){
+                row.createCell(20).setCellValue(ticket.getComplaintCompletionDatetime().format(timeFormat));
+            }
             row.createCell(21).setCellValue(ticket.getStatus());
             row.createCell(22).setCellValue(ticket.getActionTakenAndSpareUsed());
             row.createCell(23).setCellValue(ticket.getOldSerialNoMbHddTft());
