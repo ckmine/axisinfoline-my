@@ -136,7 +136,7 @@ public class TicketService {
 //            for (Row row : sheet) {
 //            {
 //                Row row1 = row;
-                if (row.getCell(1).getCellType() == 1 && row.getCell(3) !=null) {
+                if (row.getCell(1).getCellType() == 1) {
                     Ticket ticket = new Ticket();
                     if((!StringUtils.isEmpty(row.getCell(1).getStringCellValue()))){
                         ticket.setComplaintNo(row.getCell(1).getStringCellValue());
