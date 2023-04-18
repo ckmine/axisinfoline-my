@@ -58,4 +58,9 @@ public class LocationController {
         }
     }
 
+    @GetMapping(value = "/getAllZone")
+    public List<String> getAllZone(){
+        return locationService.getAllZone();
+    }
+
 }

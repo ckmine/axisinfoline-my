@@ -153,7 +153,11 @@ public class LocationService {
     }
 
     public Double getTotalCircles(){
-        return ((Number) entityManager.createNativeQuery("select count(distinct(circle)) from helpdesk.location", Double.class).getSingleResult()).doubleValue();
+        return ((Number) entityManager.createNativeQuery("select count(distinct(circle)) from helpdesk.location WHERE substation='new'", Double.class).getSingleResult()).doubleValue();
+    }
+
+    public List<String> getAllZone(){
+        return entityManager.createNativeQuery("select distinct(zone) from helpdesk.location where substation='new'", String.class).getResultList();
     }
 
 }
