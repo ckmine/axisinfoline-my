@@ -61,7 +61,7 @@ public class TicketRepository {
 
     @Transactional
     public String insertTicketForImport(Ticket ticket){
-        entityManager.createNativeQuery("INSERT INTO helpdesk.tickets (" +
+        entityManager.createNativeQuery("INSERT IGNORE INTO helpdesk.tickets (" +
                         "id," +
                         "complaint_no," +
                         "complainant_name," +
