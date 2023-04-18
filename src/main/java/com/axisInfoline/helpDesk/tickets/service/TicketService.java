@@ -349,7 +349,7 @@ public class TicketService {
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Ticket> data) throws IOException {
         DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("All-Tickets");
         int rowCount = 0;
