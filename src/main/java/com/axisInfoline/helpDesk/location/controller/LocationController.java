@@ -63,4 +63,9 @@ public class LocationController {
         return locationService.getAllZone();
     }
 
+    @GetMapping(value = "/getAllCirclesForEngineer")
+    public List<Location> getAllCirclesForEngineer(){
+        return locationService.getAllCirclesForEngineer();
+    }
+
 }

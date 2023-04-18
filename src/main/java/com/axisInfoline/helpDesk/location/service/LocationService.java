@@ -42,6 +42,9 @@ public class LocationService {
     public List<String> getAllCircles(){
         return entityManager.createNativeQuery("select distinct(circle) from helpdesk.location", String.class).getResultList();
     }
+    public List<Location> getAllCirclesForEngineer(){
+        return entityManager.createNativeQuery("select * from helpdesk.location where substation='new'", Location.class).getResultList();
+    }
 
     public List<String> getAllDivisions(){
         return entityManager.createNativeQuery("select distinct(division) from helpdesk.location", String.class).getResultList();
