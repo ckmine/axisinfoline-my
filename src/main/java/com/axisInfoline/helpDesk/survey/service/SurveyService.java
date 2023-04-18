@@ -54,19 +54,71 @@ public class SurveyService {
                         Survey survey = new Survey();
                         survey.setId(lastSerialNo);
                         survey.setCity(sheetName);
-                        survey.setCircle(row.getCell(1).getStringCellValue());
-                        survey.setDivision(row.getCell(2).getStringCellValue());
-                        survey.setSubdivision(row.getCell(3).getStringCellValue());
-                        survey.setEndLocationAddress(row.getCell(4).getStringCellValue());
-                        survey.setItHardwareName(row.getCell(5).getStringCellValue());
-                        survey.setMachineMake(row.getCell(6).getStringCellValue());
-                        survey.setModel(row.getCell(7).getStringCellValue());
-                        survey.setSerialNo(row.getCell(8).getStringCellValue());
-                        survey.setUpsBatteryStatus(row.getCell(9).getStringCellValue());
-                        survey.setWindowsType(row.getCell(10).getStringCellValue());
-                        survey.setDomainJoiningStatus(row.getCell(11).getStringCellValue());
-                        survey.setUtilityContactPersonName(row.getCell(12).getStringCellValue());
-                        survey.setUtilityContactPersonContact(row.getCell(12).getStringCellValue());
+                        if(row.getCell(1) !=null  && row.getCell(1).getCellType() == 1){
+                            survey.setCircle(row.getCell(1).getStringCellValue());
+                        } else if(row.getCell(1) !=null  && row.getCell(1).getCellType() == 0) {
+                            survey.setCircle(String.valueOf(row.getCell(1).getNumericCellValue()));
+                        }
+                        if(row.getCell(2) !=null  && row.getCell(2).getCellType() == 1){
+                            survey.setDivision(row.getCell(2).getStringCellValue());
+                        } else if(row.getCell(2) !=null  && row.getCell(2).getCellType() == 0) {
+                            survey.setDivision(String.valueOf(row.getCell(2).getNumericCellValue()));
+                        }
+                        if(row.getCell(3) !=null  && row.getCell(3).getCellType() == 1){
+                            survey.setSubdivision(row.getCell(3).getStringCellValue());
+                        } else if((row.getCell(3) !=null  && row.getCell(3).getCellType() == 0)) {
+                            survey.setSubdivision(String.valueOf(row.getCell(3).getNumericCellValue()));
+                        }
+                        if(row.getCell(4) !=null  && row.getCell(4).getCellType() == 1){
+                            survey.setEndLocationAddress(row.getCell(4).getStringCellValue());
+                        } else if((row.getCell(4) !=null  && row.getCell(4).getCellType() == 0)) {
+                            survey.setEndLocationAddress(String.valueOf(row.getCell(4).getNumericCellValue()));
+                        }
+                        if(row.getCell(5) !=null  && row.getCell(5).getCellType() == 1){
+                            survey.setItHardwareName(row.getCell(5).getStringCellValue());
+                        } else if((row.getCell(5) !=null  && row.getCell(5).getCellType() == 0)) {
+                            survey.setItHardwareName(String.valueOf(row.getCell(5).getNumericCellValue()));
+                        }
+                        if(row.getCell(6) !=null  && row.getCell(6).getCellType() == 1){
+                            survey.setMachineMake(row.getCell(6).getStringCellValue());
+                        } else if((row.getCell(6) !=null  && row.getCell(6).getCellType() == 0)) {
+                            survey.setMachineMake(String.valueOf(row.getCell(6).getNumericCellValue()));
+                        }
+                        if(row.getCell(7) !=null  && row.getCell(7).getCellType() == 1){
+                            survey.setModel(row.getCell(7).getStringCellValue());
+                        } else if((row.getCell(7) !=null  && row.getCell(7).getCellType() == 0)) {
+                            survey.setModel(String.valueOf(row.getCell(7).getNumericCellValue()));
+                        }
+                        if(row.getCell(8) !=null  && row.getCell(8).getCellType() == 1){
+                            survey.setSerialNo(row.getCell(8).getStringCellValue());
+                        } else if((row.getCell(8) !=null  && row.getCell(8).getCellType() == 0)) {
+                            survey.setSerialNo(String.valueOf(row.getCell(8).getNumericCellValue()));
+                        }
+                        if(row.getCell(9) !=null  && row.getCell(9).getCellType() == 1){
+                            survey.setUpsBatteryStatus(row.getCell(9).getStringCellValue());
+                        } else if((row.getCell(9) !=null  && row.getCell(9).getCellType() == 0)) {
+                            survey.setUpsBatteryStatus(String.valueOf(row.getCell(9).getNumericCellValue()));
+                        }
+                        if(row.getCell(10) !=null && row.getCell(10).getCellType() == 1){
+                            survey.setWindowsType(row.getCell(10).getStringCellValue());
+                        } else if((row.getCell(10) !=null  && row.getCell(10) !=null && row.getCell(10).getCellType() == 0)) {
+                            survey.setSerialNo(String.valueOf(row.getCell(10).getNumericCellValue()));
+                        }
+                        if(row.getCell(11) !=null && row.getCell(11).getCellType() == 1){
+                            survey.setDomainJoiningStatus(row.getCell(11).getStringCellValue());
+                        } else if(row.getCell(11) !=null && row.getCell(11).getCellType() == 0) {
+                            survey.setDomainJoiningStatus(String.valueOf(row.getCell(11).getNumericCellValue()));
+                        }
+                        if(row.getCell(12) !=null && row.getCell(12).getCellType() == 1){
+                            survey.setUtilityContactPersonName(row.getCell(12).getStringCellValue());
+                        } else if(row.getCell(12) !=null && row.getCell(12).getCellType() == 0) {
+                            survey.setUtilityContactPersonName(String.valueOf(row.getCell(12).getNumericCellValue()));
+                        }
+                        if(row.getCell(13) !=null && row.getCell(12).getCellType() == 1){
+                            survey.setUtilityContactPersonContact(row.getCell(12).getStringCellValue());
+                        } else if(row.getCell(13) !=null && row.getCell(12).getCellType() == 0) {
+                            survey.setUtilityContactPersonContact(String.valueOf(row.getCell(12).getNumericCellValue()));
+                        }
                         surveys.add(survey);
 //                        insertSurveyForImport(survey);
                     }
