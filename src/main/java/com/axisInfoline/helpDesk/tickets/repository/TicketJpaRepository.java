@@ -13,4 +13,7 @@ public interface TicketJpaRepository extends org.springframework.data.jpa.reposi
     @Query(value = "SELECT * FROM helpdesk.tickets where complaint_no in ?1", nativeQuery = true)
     public List<Ticket> fetchSurveyListById(List<String> complaintNoList);
 
+    @Query(value = "SELECT * FROM helpdesk.tickets where complaint_no in ?1 ORDER BY complaint_no ASC", nativeQuery = true)
+    public List<Ticket> fetchTicketListByASCOrder(List<String> complaintNoList);
+
 }

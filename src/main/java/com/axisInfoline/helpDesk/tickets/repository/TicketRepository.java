@@ -219,11 +219,11 @@ public class TicketRepository {
     }
 
     public List<Ticket> getAllTickets(String status, LocalDateTime fromDate, LocalDateTime toDate){
-        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
+        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status order by complaint_datetime DESC",Ticket.class).setParameter("status",status).getResultList();
     }
 
     public List<Ticket> getTicketsByCircle(String circle, String status, LocalDateTime fromDate, LocalDateTime toDate){
-        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and circle= :circle and complaint_datetime between :fromDate and :toDate order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("circle",circle).setParameter("fromDate",fromDate).setParameter("toDate",toDate).getResultList();
+        return entityManager.createNativeQuery("select * from helpdesk.tickets where status=:status and circle= :circle order by complaint_datetime DESC",Ticket.class).setParameter("status",status).setParameter("circle",circle).getResultList();
     }
 
     public List<Count> getTicketsCountMatricesForAdmin(){

@@ -73,7 +73,7 @@ public class TicketController {
 
     @PostMapping("/exportTicketByComplaintNo")
     public ResponseEntity<ByteArrayResource> exportSurveyByCity(HttpServletResponse response , @RequestBody List<String> complaintNoList) throws IOException {
-        List<Ticket> tickets = ticketService.fetchTicketListById(complaintNoList);
+        List<Ticket> tickets = ticketService.fetchTicketListByASCOrder(complaintNoList);
         return ticketService.generateExcelFile(tickets);
     }
 

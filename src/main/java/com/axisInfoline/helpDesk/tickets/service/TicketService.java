@@ -120,7 +120,15 @@ public class TicketService {
 
     public LocalDateTime concatDateAndTime(String date, String time) {
         LocalDate datePart = LocalDate.parse(date);
-        LocalTime timePart = LocalTime.parse(time);
+        LocalTime timePart = LocalTime.parse(StringUtils.isNotEmpty(time) ? time : "00:00");
+        LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
+        return LocalDateTime.parse(dtf.format(dt));
+    }
+
+    public LocalDateTime concatDateAndTimeForImport(String date, String time) {
+        LocalDate datePart = LocalDate.parse(date,DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalTime timePart = LocalTime.parse(StringUtils.isNotEmpty(time) ? time : "00:00");
         LocalDateTime dt = LocalDateTime.of(datePart, timePart);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm");
         return LocalDateTime.parse(dtf.format(dt));
@@ -130,116 +138,149 @@ public class TicketService {
         try {
             List<Ticket> tickets = new ArrayList<>();
             DecimalFormat decfor = new DecimalFormat("0.00");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(multipartFile.getInputStream());
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
             for (Row row : skipFirst(sheet)){
 //            for (Row row : sheet) {
 //            {
 //                Row row1 = row;
-                if (row.getCell(1).getCellType() == 1) {
+                if (row.getCell(1) !=null && row.getCell(1).getCellType() == 1) {
                     Ticket ticket = new Ticket();
                     if((!StringUtils.isEmpty(row.getCell(1).getStringCellValue()))){
                         ticket.setComplaintNo(row.getCell(1).getStringCellValue());
                     }
-                    if(row.getCell(3).getCellType() != 1){
+                    System.out.printf("jjj "+row.getCell(2).getCellType());
+                    if(row.getCell(2) !=null && row.getCell(2).getCellType() != 1 && row.getCell(3).getDateCellValue() != null){
                         if(row.getCell(3).getDateCellValue() != null){
+//                            ticket.setComplaintDatetime(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(2).getDateCellValue())).atStartOfDay());
                             ticket.setComplaintDatetime(LocalDateTime.of(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(2).getDateCellValue())), LocalTime.parse(new SimpleDateFormat("HH:mm:ss").format(row.getCell(3).getDateCellValue()))));
-                        } else if(row.getCell(2).getDateCellValue() != null) {
+                        }else {
                             ticket.setComplaintDatetime(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(2).getDateCellValue())).atStartOfDay());
                         }
                     }
-                    if((!StringUtils.isEmpty(row.getCell(4).getStringCellValue()))){
+                    //forString type - when we will upload system exported exel
+                    if(row.getCell(2) !=null && row.getCell(2).getCellType() == 1 && row.getCell(3).getStringCellValue() != null){
+                        if(row.getCell(3).getStringCellValue() != null){
+
+//                            ticket.setComplaintDatetime(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(2).getDateCellValue())).atStartOfDay());
+                            ticket.setComplaintDatetime(concatDateAndTimeForImport(row.getCell(2).getStringCellValue(), row.getCell(3).getStringCellValue()));
+                        }else {
+                            ticket.setComplaintDatetime(concatDateAndTimeForImport(row.getCell(2).getStringCellValue(),"00:00"));
+                        }
+                    }
+                    if(row.getCell(4) !=null && !StringUtils.isEmpty(row.getCell(4).getStringCellValue())){
                         ticket.setLocationCode(row.getCell(4).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(5).getStringCellValue()))){
+                    if(row.getCell(5) !=null && !StringUtils.isEmpty(row.getCell(5).getStringCellValue())){
                         ticket.setCircle(row.getCell(5).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(6).getStringCellValue()))){
+                    if(row.getCell(6) !=null && !StringUtils.isEmpty(row.getCell(6).getStringCellValue())){
                         ticket.setDivision(row.getCell(6).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(7).getStringCellValue()))){
+                    if(row.getCell(7) !=null && !StringUtils.isEmpty(row.getCell(7).getStringCellValue())){
                         ticket.setSubstation(row.getCell(7).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(8).getStringCellValue()))){
+                    if(row.getCell(8) !=null && !StringUtils.isEmpty(row.getCell(8).getStringCellValue())){
                         ticket.setComplainantName(row.getCell(8).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(9).getStringCellValue()))){
+                    if(row.getCell(9) !=null && !StringUtils.isEmpty(row.getCell(9).getStringCellValue())){
                         ticket.setComplainantDesignation(row.getCell(9).getStringCellValue());
                     }
-                    if(row.getCell(10).getCellType() == 0){
+                    if(row.getCell(10) !=null && row.getCell(10).getCellType() == 0){
                         ticket.setComplainantContactNo(String.valueOf((long) row.getCell(10).getNumericCellValue()));
                     }
-                    if((!StringUtils.isEmpty(row.getCell(8).getStringCellValue()))){
+                    if((row.getCell(11) !=null && !StringUtils.isEmpty(row.getCell(8).getStringCellValue()))){
                         ticket.setDefectiveItemName(row.getCell(11).getStringCellValue());
                     }
                     //StringType=1,NumberType=0,Empty = 3
-                    if(row.getCell(12).getCellType() == 1){
+                    if(row.getCell(12) !=null &&  row.getCell(12).getCellType() == 1){
                         ticket.setUxb1jsi364g4453780(row.getCell(12).getStringCellValue());
-                    } else if(row.getCell(12).getCellType() == 0) {
+                    } else if(row.getCell(12) !=null &&  row.getCell(12).getCellType() == 0) {
                         ticket.setUxb1jsi364g4453780(String.valueOf((long) row.getCell(12).getNumericCellValue()));
                     }
-                    if((!StringUtils.isEmpty(row.getCell(13).getStringCellValue()))){
+                    if((row.getCell(13) !=null && !StringUtils.isEmpty(row.getCell(13).getStringCellValue()))){
                         ticket.setProblemType(row.getCell(13).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(14).getStringCellValue()))){
+                    if(row.getCell(14) !=null && !StringUtils.isEmpty(row.getCell(14).getStringCellValue())){
                         ticket.setEngineerAssigned(row.getCell(14).getStringCellValue());
                     }
-                    if(row.getCell(15).getCellType() == 0){
+                    if(row.getCell(15) !=null && row.getCell(15).getCellType() == 0){
                         ticket.setEngineerContactNo(String.valueOf((long) row.getCell(15).getNumericCellValue()));
                     }
-                    if(row.getCell(16).getCellType() != 1){
+                    if(row.getCell(16) !=null &&  row.getCell(16).getCellType() != 1){
                         if (row.getCell(16).getDateCellValue() != null) {
                             ticket.setComplaintAttemptsFirstDateAndTime(LocalDateTime.ofInstant(row.getCell(16).getDateCellValue().toInstant(), ZoneId.systemDefault()));
                         }
                     }
-                    if(row.getCell(16).getCellType() != 1){
+                    //working on
+//                    if(row.getCell(16) !=null && row.getCell(16).getCellType() == 1 && row.getCell(16).getStringCellValue() != null){
+//                        if(row.getCell(16).getStringCellValue() != null){
+//                            ticket.setComplaintCompletionDatetime(concatDateAndTimeForImport(row.getCell(16).getStringCellValue(), row.getCell(20).getStringCellValue()));
+//                        }else {
+//                            ticket.setComplaintCompletionDatetime(concatDateAndTimeForImport(row.getCell(19).getStringCellValue(),"00:00"));
+//                        }
+//                    }
+
+                    if(row.getCell(17) !=null && row.getCell(17).getCellType() != 1){
                         if (row.getCell(17).getDateCellValue() != null) {
                             ticket.setComplaintAttemptsSecondDateAndTime(LocalDateTime.ofInstant(row.getCell(17).getDateCellValue().toInstant(), ZoneId.systemDefault()));
                         }
                     }
-                    if(row.getCell(16).getCellType() != 1){
+                    if(row.getCell(18) !=null && row.getCell(18).getCellType() != 1){
                         if (row.getCell(18).getDateCellValue() != null) {
                             ticket.setComplaintAttemptsThirdDateAndTime(LocalDateTime.ofInstant(row.getCell(18).getDateCellValue().toInstant(), ZoneId.systemDefault()));
                         }
                     }
-                    if(row.getCell(16).getCellType() != 1){
+                    if(row.getCell(19) !=null && row.getCell(20).getCellType() != 1 && row.getCell(20).getDateCellValue() != null){ //maybeBug Occurs let's check
                         if(row.getCell(20).getDateCellValue() != null){
-                            ticket.setComplaintDatetime(LocalDateTime.of(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(19).getDateCellValue())), LocalTime.parse(new SimpleDateFormat("HH:mm:ss").format(row.getCell(20).getDateCellValue()))));
-                        } else if(row.getCell(19).getDateCellValue() != null) {
-                            ticket.setComplaintCompletionDatetime(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(19).getDateCellValue())).atStartOfDay());
+                            ticket.setComplaintCompletionDatetime(LocalDateTime.of(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(19).getDateCellValue())), LocalTime.parse(new SimpleDateFormat("HH:mm:ss").format(row.getCell(20).getDateCellValue()))));
+                        } else {
+                            if(row.getCell(19).getDateCellValue() !=null){
+                                ticket.setComplaintCompletionDatetime(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(19).getDateCellValue())).atStartOfDay());
+                            }
                         }
                     }
-                    if((!StringUtils.isEmpty(row.getCell(21).getStringCellValue()))){
+                    //codeprogress
+                    if(row.getCell(19) !=null && row.getCell(20).getCellType() == 1 && row.getCell(20).getStringCellValue() != null){
+                        if(row.getCell(20).getStringCellValue() != null){
+                            ticket.setComplaintCompletionDatetime(concatDateAndTimeForImport(row.getCell(19).getStringCellValue(), row.getCell(20).getStringCellValue()));
+                        }else {
+                            ticket.setComplaintCompletionDatetime(concatDateAndTimeForImport(row.getCell(19).getStringCellValue(),"00:00"));
+                        }
+                    }
+                    if((row.getCell(21) !=null && !StringUtils.isEmpty(row.getCell(21).getStringCellValue()))){
                         ticket.setStatus(row.getCell(21).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(22).getStringCellValue()))){
+                    if(row.getCell(22) !=null && !StringUtils.isEmpty(row.getCell(22).getStringCellValue())){
                         ticket.setActionTakenAndSpareUsed(row.getCell(22).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(23).getStringCellValue()))){
+                    if(row.getCell(23) !=null && !StringUtils.isEmpty(row.getCell(23).getStringCellValue())){
                         ticket.setOldSerialNoMbHddTft(row.getCell(23).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(row.getCell(24).getStringCellValue()))){
+                    if(row.getCell(24) !=null && !StringUtils.isEmpty(row.getCell(24).getStringCellValue())){
                         ticket.setNewSerialNoMbHddTft(row.getCell(24).getStringCellValue());
                     }
-                    if(row.getCell(25).getCellType() == 2){
+                    if(row.getCell(25) !=null && row.getCell(25).getCellType() == 2){
                         if(!StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
                             ticket.setComplaintAttendHours(Double.valueOf(decfor.format(row.getCell(25).getNumericCellValue())));
                         }
                     }
-                    if(row.getCell(26).getCellType() == 2){
+                    if(row.getCell(26) !=null && row.getCell(26).getCellType() == 2){
                         if(!StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
                             ticket.setComplaintCompletionInDays(Double.valueOf(decfor.format(row.getCell(26).getNumericCellValue())));
                         }
                     }
-                    if(row.getCell(27).getCellType() == 2){
+                    if(row.getCell(27) !=null && row.getCell(27).getCellType() == 2){
                         if(!StringUtils.isEmpty(row.getCell(1).getStringCellValue())){
                             ticket.setComplaintCompletionInHour(Double.valueOf(decfor.format(row.getCell(27).getNumericCellValue())));
                         }
                     }
-                    if((!StringUtils.isEmpty(row.getCell(28).getStringCellValue()))){
+                    if((row.getCell(28) !=null && !StringUtils.isEmpty(row.getCell(28).getStringCellValue()))){
                         ticket.setRemarks(row.getCell(28).getStringCellValue());
                     }
-                    if((!StringUtils.isEmpty(ticket.getComplaintNo()))){
+                    if(!StringUtils.isEmpty(ticket.getComplaintNo())){
                         ticket.setId(getMd5(ticket.getComplaintNo().concat(ticket.getComplainantName() != null ? ticket.getComplainantName(): "--")));
                     }
                     ticketRepository.insertTicketForImport(ticket);
@@ -291,16 +332,17 @@ public class TicketService {
     }
 
     public ResponseEntity<ByteArrayResource> generateExcelFile(List<Ticket> data) throws IOException {
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("All-Tickets");
         int rowCount = 0;
+        int serialNo = 1;
         Row headerRow = sheet.createRow(rowCount++);
         headerRow.createCell(0).setCellValue("S/no.");
         headerRow.createCell(1).setCellValue("Complaint No.");
-        headerRow.createCell(2).setCellValue("Complaint  Date");
+        headerRow.createCell(2).setCellValue("Complaint Date");
         headerRow.createCell(3).setCellValue("Complaint Time");
         headerRow.createCell(4).setCellValue("Location_code");
         headerRow.createCell(5).setCellValue("Circle");
@@ -330,23 +372,50 @@ public class TicketService {
 
         for (Ticket ticket : data) {
             Row row = sheet.createRow(rowCount++);
-
-            row.createCell(0).setCellValue(++rowCount);
-            row.createCell(1).setCellValue(ticket.getComplaintNo());
-            row.createCell(2).setCellValue(ticket.getComplaintDatetime().format(dateFormat));
-            row.createCell(3).setCellValue(ticket.getComplaintDatetime().format(timeFormat));
-            row.createCell(4).setCellValue(ticket.getLocationCode());
-            row.createCell(5).setCellValue(ticket.getCircle());
-            row.createCell(6).setCellValue(ticket.getDivision());
-            row.createCell(7).setCellValue(ticket.getSubstation());
-            row.createCell(8).setCellValue(ticket.getComplainantName());
-            row.createCell(9).setCellValue(ticket.getComplainantDesignation());
-            row.createCell(10).setCellValue(ticket.getComplainantContactNo());
-            row.createCell(11).setCellValue(ticket.getDefectiveItemName());
-            row.createCell(12).setCellValue(ticket.getUxb1jsi364g4453780());
-            row.createCell(13).setCellValue(ticket.getProblemType());
-            row.createCell(14).setCellValue(ticket.getEngineerAssigned());
-            row.createCell(15).setCellValue(ticket.getEngineerContactNo());
+            row.createCell(0).setCellValue(serialNo++);
+            if(StringUtils.isNotEmpty(ticket.getComplaintNo())){
+                row.createCell(1).setCellValue(ticket.getComplaintNo());
+            }
+            if(ticket.getComplaintDatetime() !=null){
+                row.createCell(2).setCellValue(ticket.getComplaintDatetime().format(dateFormat));
+                row.createCell(3).setCellValue(ticket.getComplaintDatetime().format(timeFormat));
+            }
+            if(StringUtils.isNotEmpty(ticket.getLocationCode())){
+                row.createCell(4).setCellValue(ticket.getLocationCode());
+            }
+            if(StringUtils.isNotEmpty(ticket.getCircle())){
+                row.createCell(5).setCellValue(ticket.getCircle());
+            }
+            if(StringUtils.isNotEmpty(ticket.getDivision())){
+                row.createCell(6).setCellValue(ticket.getDivision());
+            }
+            if(StringUtils.isNotEmpty(ticket.getSubstation())){
+                row.createCell(7).setCellValue(ticket.getSubstation());
+            }
+            if(StringUtils.isNotEmpty(ticket.getComplainantName())){
+                row.createCell(8).setCellValue(ticket.getComplainantName());
+            }
+            if(StringUtils.isNotEmpty(ticket.getComplainantDesignation())){
+                row.createCell(9).setCellValue(ticket.getComplainantDesignation());
+            }
+            if(StringUtils.isNotEmpty(ticket.getComplainantContactNo())){
+                row.createCell(10).setCellValue(ticket.getComplainantContactNo());
+            }
+            if(StringUtils.isNotEmpty(ticket.getDefectiveItemName())){
+                row.createCell(11).setCellValue(ticket.getDefectiveItemName());
+            }
+            if(StringUtils.isNotEmpty(ticket.getUxb1jsi364g4453780())){
+                row.createCell(12).setCellValue(ticket.getUxb1jsi364g4453780());
+            }
+            if(StringUtils.isNotEmpty(ticket.getProblemType())){
+                row.createCell(13).setCellValue(ticket.getProblemType());
+            }
+            if(StringUtils.isNotEmpty(ticket.getEngineerAssigned())){
+                row.createCell(14).setCellValue(ticket.getEngineerAssigned());
+            }
+            if(StringUtils.isNotEmpty(ticket.getEngineerContactNo())){
+                row.createCell(15).setCellValue(ticket.getEngineerContactNo());
+            }
             if(ticket.getComplaintAttemptsFirstDateAndTime() != null){
                 row.createCell(16).setCellValue(ticket.getComplaintAttemptsFirstDateAndTime().format(dateTimeFormat));
             }
@@ -362,14 +431,30 @@ public class TicketService {
             if(ticket.getComplaintCompletionDatetime() != null){
                 row.createCell(20).setCellValue(ticket.getComplaintCompletionDatetime().format(timeFormat));
             }
-            row.createCell(21).setCellValue(ticket.getStatus());
-            row.createCell(22).setCellValue(ticket.getActionTakenAndSpareUsed());
-            row.createCell(23).setCellValue(ticket.getOldSerialNoMbHddTft());
-            row.createCell(24).setCellValue(ticket.getNewSerialNoMbHddTft());
-            row.createCell(25).setCellValue(ticket.getComplaintAttendHours());
-            row.createCell(26).setCellValue(ticket.getComplaintCompletionInDays());
-            row.createCell(27).setCellValue(ticket.getComplaintCompletionInHour());
-            row.createCell(28).setCellValue(ticket.getRemarks());
+            if(StringUtils.isNotEmpty(ticket.getStatus())){
+                row.createCell(21).setCellValue(ticket.getStatus());
+            }
+            if(StringUtils.isNotEmpty(ticket.getActionTakenAndSpareUsed())){
+                row.createCell(22).setCellValue(ticket.getActionTakenAndSpareUsed());
+            }
+            if(StringUtils.isNotEmpty(ticket.getOldSerialNoMbHddTft())){
+                row.createCell(23).setCellValue(ticket.getOldSerialNoMbHddTft());
+            }
+            if(StringUtils.isNotEmpty(ticket.getNewSerialNoMbHddTft())){
+                row.createCell(24).setCellValue(ticket.getNewSerialNoMbHddTft());
+            }
+            if(ticket.getComplaintAttendHours() !=null){
+                row.createCell(25).setCellValue(ticket.getComplaintAttendHours());
+            }
+            if(ticket.getComplaintCompletionInDays() !=null){
+                row.createCell(26).setCellValue(ticket.getComplaintCompletionInDays());
+            }
+            if(ticket.getComplaintCompletionInHour() !=null){
+                row.createCell(27).setCellValue(ticket.getComplaintCompletionInHour());
+            }
+            if(StringUtils.isNotEmpty(ticket.getRemarks())){
+                row.createCell(28).setCellValue(ticket.getRemarks());
+            }
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         workbook.write(baos);
@@ -384,6 +469,10 @@ public class TicketService {
 
     public List<Ticket> fetchTicketListById(List<String> complaintNoList) {
         return ticketJpaRepository.fetchSurveyListById(complaintNoList);
+    }
+
+    public List<Ticket> fetchTicketListByASCOrder(List<String> complaintNoList) {
+        return ticketJpaRepository.fetchTicketListByASCOrder(complaintNoList);
     }
 
     public Map<String, List<String>> getTicketDropDownMatrix(String loggedInUserId) throws Exception {
